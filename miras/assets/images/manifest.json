@@ -1,0 +1,177 @@
+{
+  "generated": "2026-09-08 12:49:23",
+  "note": "Photos bundled from Wikimedia Commons for offline use. Attribution in-app (Sources screen).",
+  "images": [
+    {
+      "site": "nemrut",
+      "source": "https://commons.wikimedia.org/wiki/File:Mount_Nemrut_-_East_Terrace_%284961323529%29.jpg",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "author": "Klearchos Kapoutsis from Santorini, Greece",
+      "article": "https://en.wikipedia.org/wiki/Mount%20Nemrut",
+      "file": "nemrut.jpg"
+    },
+    {
+      "site": "cappadocia",
+      "source": "https://commons.wikimedia.org/wiki/File:Turkey.U%C3%A7hisar07.jpg",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "author": "Georges Jansoone JoJan",
+      "article": "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BF%D0%BF%D0%B0%D0%B4%D0%BE%D0%BA%D0%B8%D1%8F",
+      "file": "cappadocia.jpg"
+    },
+    {
+      "site": "catalhoyuk",
+      "source": "https://commons.wikimedia.org/wiki/File:%C3%87atalh%C3%B6y%C3%BCk%2C_7400_BC%2C_Konya%2C_Turkey_-_UNESCO_World_Heritage_Site%2C_08.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "author": "Murat Özsoy 1958",
+      "article": "https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%82%D0%B0%D0%BB-%D0%A5%D1%8E%D1%8E%D0%BA",
+      "file": "catalhoyuk.jpg"
+    },
+    {
+      "site": "halicarnassus",
+      "source": "https://commons.wikimedia.org/wiki/File:The_ruins_of_the_Mausoleum_at_Halicarnassus.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "author": "FollowingHadrian",
+      "article": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%BB%D0%B8%D0%BA%D0%B0%D1%80%D0%BD%D0%B0%D1%81%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BC%D0%B0%D0%B2%D0%B7%D0%BE%D0%BB%D0%B5%D0%B9",
+      "file": "halicarnassus.jpg"
+    },
+    {
+      "site": "side",
+      "source": "https://commons.wikimedia.org/wiki/File:Sunrise_apollo_side.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Saffron Blaze",
+      "article": "https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B4%D0%B5",
+      "file": "side.jpg"
+    },
+    {
+      "site": "hattusa",
+      "source": "https://commons.wikimedia.org/wiki/File:Lion_Gate%2C_Hattusa_01.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Bernard Gagnon",
+      "article": "https://ru.wikipedia.org/wiki/%D0%A5%D0%B0%D1%82%D1%82%D1%83%D1%81%D0%B0",
+      "file": "hattusa.jpg"
+    },
+    {
+      "site": "aspendos",
+      "source": "https://commons.wikimedia.org/wiki/File:Aspendos_Amphitheatre.jpg",
+      "license": "See Commons file page",
+      "licenseUrl": null,
+      "author": null,
+      "article": "https://ru.wikipedia.org/wiki/%D0%90%D1%81%D0%BF%D0%B5%D0%BD%D0%B4%D0%BE%D1%81",
+      "file": "aspendos.jpg"
+    },
+    {
+      "site": "troy",
+      "source": "https://commons.wikimedia.org/wiki/File:Walls_of_Troy_%282%29.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "CherryX",
+      "article": "https://en.wikipedia.org/wiki/Troy",
+      "file": "troy.jpg"
+    },
+    {
+      "site": "basilica-cistern",
+      "source": "https://commons.wikimedia.org/wiki/File:Basilica_Cistern_after_restoration_2022_%2811%29.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "author": "Kurmanbek",
+      "article": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D1%81%D1%82%D0%B5%D1%80%D0%BD%D0%B0%20%D0%91%D0%B0%D0%B7%D0%B8%D0%BB%D0%B8%D0%BA%D0%B0",
+      "file": "basilica-cistern.jpg"
+    },
+    {
+      "site": "pamukkale",
+      "source": "https://commons.wikimedia.org/wiki/File:Pamukkale%2C_Denizli_2026_68.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "author": "Biologg",
+      "article": "https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D0%BC%D1%83%D0%BA%D0%BA%D0%B0%D0%BB%D0%B5",
+      "file": "pamukkale.jpg"
+    },
+    {
+      "site": "hagia-sophia",
+      "source": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Mars_2013.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Arild Vågen",
+      "article": "https://ru.wikipedia.org/wiki/%D0%90%D0%B9%D1%8F-%D0%A1%D0%BE%D1%84%D0%B8%D1%8F",
+      "file": "hagia-sophia.jpg"
+    },
+    {
+      "site": "pergamon",
+      "source": "https://commons.wikimedia.org/wiki/File:Acropolis_-_Bergama_%28Pergamon%29_-_Turkey_-_10_%285747249729%29.jpg",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "article": "https://en.wikipedia.org/wiki/Pergamon",
+      "file": "pergamon.jpg"
+    },
+    {
+      "site": "gobekli-tepe",
+      "source": "https://commons.wikimedia.org/wiki/File:G%C3%B6bekli_Tepe%2C_Urfa.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Teomancimit",
+      "article": "https://ru.wikipedia.org/wiki/%D0%93%D1%91%D0%B1%D0%B5%D0%BA%D0%BB%D0%B8-%D0%A2%D0%B5%D0%BF%D0%B5",
+      "file": "gobekli-tepe.jpg"
+    },
+    {
+      "site": "topkapi",
+      "source": "https://commons.wikimedia.org/wiki/File:Topkap%C4%B1_-_01.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Carlos Delgado",
+      "article": "https://ru.wikipedia.org/wiki/%D0%94%D0%B2%D0%BE%D1%80%D0%B5%D1%86%20%D0%A2%D0%BE%D0%BF%D0%BA%D0%B0%D0%BF%D1%8B",
+      "file": "topkapi.jpg"
+    },
+    {
+      "site": "selimiye",
+      "source": "https://commons.wikimedia.org/wiki/File:Selimiye_Mosque_%2815051985908%29_%28cropped%29.jpg",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "author": "rob Stoeltje from loenen, netherlands",
+      "article": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%87%D0%B5%D1%82%D1%8C%20%D0%A1%D0%B5%D0%BB%D0%B8%D0%BC%D0%B8%D0%B5",
+      "file": "selimiye.jpg"
+    },
+    {
+      "site": "dolmabahce",
+      "source": "https://commons.wikimedia.org/wiki/File:Dolmabahce_Istanbul_Turkey.jpg",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "author": "flowcomm",
+      "article": "https://en.wikipedia.org/wiki/Dolmabah%C3%A7e%20Palace",
+      "file": "dolmabahce.jpg"
+    },
+    {
+      "site": "myra",
+      "source": "https://commons.wikimedia.org/wiki/File:Myra_theatre.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Ingo Mehling",
+      "article": "https://en.wikipedia.org/wiki/Myra",
+      "file": "myra.jpg"
+    },
+    {
+      "site": "ephesus",
+      "source": "https://commons.wikimedia.org/wiki/File:Ephesus_Celsus_Library_Fa%C3%A7ade.jpg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "author": "Benh LIEU SONG",
+      "article": "https://en.wikipedia.org/wiki/Ephesus",
+      "file": "ephesus.jpg"
+    },
+    {
+      "site": "anitkabir",
+      "source": "https://commons.wikimedia.org/wiki/File:Ankara_asv2021-10_img04_An%C4%B1tkabir.jpg",
+      "license": "FAL",
+      "licenseUrl": "http://artlibre.org/licence/lal/en",
+      "author": "A.Savin",
+      "article": "https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D1%8B%D1%82%D0%BA%D0%B0%D0%B1%D0%B8%D1%80",
+      "file": "anitkabir.jpg"
+    }
+  ]
+}

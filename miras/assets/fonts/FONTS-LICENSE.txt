@@ -1,0 +1,4 @@
+Fonts bundled under the SIL Open Font License:
+Cormorant (c) Christian Thalmann, github.com/google/fonts/ofl/cormorant
+Manrope (c) Mikhail Sharanda, github.com/google/fonts/ofl/manrope
+License: https://openfontlicense.org/
