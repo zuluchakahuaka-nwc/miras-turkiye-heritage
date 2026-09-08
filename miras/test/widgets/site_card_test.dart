@@ -62,12 +62,16 @@ void main() {
       date: const L10nText('I в.', 'MS 1. yy', '1st c.'),
       era: Era.antiquity,
       sortYear: 100,
+      lat: 37.0,
+      lon: 30.0,
       desc: const L10nText(
         'Описание тестового объекта, которого нет в манифесте.',
         'Manifestte olmayan test nesnesi açıklaması.',
         'Description of a test object missing from the manifest.',
       ),
       pride: const L10nText('Гордость', 'Gurur', 'Pride'),
+      legend: const L10nText('Легенда тестового объекта.', 'Test efsanesi.', 'A test legend.'),
+      gettingThere: const L10nText('Как добраться: тест.', 'Nasıl gidilir: test.', 'Getting there: test.'),
       wikiRu: 'Тест',
       wikiEn: 'Test',
     );

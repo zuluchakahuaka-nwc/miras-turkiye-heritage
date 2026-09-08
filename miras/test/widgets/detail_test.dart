@@ -14,7 +14,7 @@ void main() {
   });
 
   Future<void> pumpDetail(WidgetTester tester, Site site, AppLang lang) async {
-    tester.view.physicalSize = const Size(420, 2400);
+    tester.view.physicalSize = const Size(420, 3600);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(MaterialApp(
@@ -31,6 +31,12 @@ void main() {
     expect(find.text('Айя-София'), findsOneWidget);
     expect(find.textContaining('Купол диаметром 31 метр'), findsOneWidget);
     expect(find.text(t(AppLang.ru, 'pride.label')), findsOneWidget);
+    expect(find.text(t(AppLang.ru, 'detail.legend')), findsOneWidget);
+    expect(find.text(t(AppLang.ru, 'detail.gettingThere')), findsOneWidget);
+    expect(find.textContaining(t(AppLang.ru, 'detail.coords')), findsOneWidget);
+    expect(find.textContaining('плачущая колонна'), findsOneWidget);
+    expect(find.textContaining('трамвай T1'), findsOneWidget);
+    expect(find.textContaining('Координаты: 41.0086° N, 28.9800° E'), findsOneWidget);
     expect(find.textContaining('Соломон, я превзошёл тебя'), findsOneWidget);
     expect(find.textContaining('UNESCO'), findsOneWidget);
     expect(find.textContaining('Истанбул'), findsWidgets);

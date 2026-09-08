@@ -13,25 +13,80 @@ class SiteDetailScreen extends StatelessWidget {
   const SiteDetailScreen({super.key, required this.site, required this.lang});
 
   Widget _fact(IconData icon, String label, String value) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 330),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: MirasColors.ivory,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0x2214636B)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 16, color: MirasColors.teal),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                '$label: $value',
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontFamily: 'Manrope',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12.5,
+                  color: MirasColors.ink,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _infoSection({
+    required IconData icon,
+    required String title,
+    required String body,
+  }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: MirasColors.ivory,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0x2214636B)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0x33C9A227)),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 16, color: MirasColors.teal),
-          const SizedBox(width: 6),
-          Text(
-            '$label: $value',
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              fontWeight: FontWeight.w600,
-              fontSize: 12.5,
-              color: MirasColors.ink,
+          Icon(icon, size: 26, color: MirasColors.teal),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 11.5,
+                    letterSpacing: 1.4,
+                    color: MirasColors.terracotta,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  body,
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 14,
+                    height: 1.55,
+                    color: MirasColors.bodyText,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -144,6 +199,24 @@ class SiteDetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 18),
+                _infoSection(
+                  icon: Icons.auto_stories,
+                  title: t(lang, 'detail.legend'),
+                  body: site.legend.by(lang),
+                ),
+                const SizedBox(height: 14),
+                _infoSection(
+                  icon: Icons.directions_bus,
+                  title: t(lang, 'detail.gettingThere'),
+                  body: site.gettingThere.by(lang),
+                ),
+                const SizedBox(height: 14),
+                _fact(
+                  Icons.my_location,
+                  t(lang, 'detail.coords'),
+                  formatCoords(site.lat, site.lon),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton.icon(

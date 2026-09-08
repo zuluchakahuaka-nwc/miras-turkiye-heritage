@@ -106,9 +106,9 @@ const Map<String, Map<AppLang, String>> kStrings = {
     AppLang.en: 'Heritage gallery',
   },
   'section.gallerySub': {
-    AppLang.ru: '19 объектов — от неолита до Республики',
-    AppLang.tr: '19 varlık — neolitikten Cumhuriyet\'e',
-    AppLang.en: '19 landmarks — from the Neolithic to the Republic',
+    AppLang.ru: '26 объектов — от неолита до Республики',
+    AppLang.tr: '26 varlık — neolitikten Cumhuriyet\'e',
+    AppLang.en: '26 landmarks — from the Neolithic to the Republic',
   },
   'search.hint': {
     AppLang.ru: 'Поиск: Сиде, Эфес, İstanbul…',
@@ -144,6 +144,21 @@ const Map<String, Map<AppLang, String>> kStrings = {
     AppLang.ru: 'Эпоха',
     AppLang.tr: 'Dönem',
     AppLang.en: 'Era',
+  },
+  'detail.legend': {
+    AppLang.ru: 'Легенды и мифы',
+    AppLang.tr: 'Efsaneler ve mitler',
+    AppLang.en: 'Legends & myths',
+  },
+  'detail.gettingThere': {
+    AppLang.ru: 'Как добраться',
+    AppLang.tr: 'Nasıl gidilir',
+    AppLang.en: 'Getting there',
+  },
+  'detail.coords': {
+    AppLang.ru: 'Координаты',
+    AppLang.tr: 'Koordinatlar',
+    AppLang.en: 'Coordinates',
   },
   'empty.search': {
     AppLang.ru: 'Ничего не найдено',

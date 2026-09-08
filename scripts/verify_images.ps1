@@ -25,10 +25,10 @@ if (-not (Get-Command mcp-cli -ErrorAction SilentlyContinue)) {
 Add-Type -AssemblyName System.Drawing
 
 $orderedIds = @(
-    'gobekli-tepe', 'catalhoyuk', 'hattusa', 'troy', 'ephesus', 'side',
-    'aspendos', 'pergamon', 'nemrut', 'pamukkale', 'myra', 'halicarnassus',
-    'cappadocia', 'hagia-sophia', 'basilica-cistern', 'topkapi', 'selimiye',
-    'dolmabahce', 'anitkabir'
+    'gobekli-tepe', 'catalhoyuk', 'hattusa', 'gordion', 'sardis', 'troy', 'ephesus', 'side',
+    'aspendos', 'pergamon', 'miletus', 'aphrodisias', 'nemrut', 'pamukkale', 'myra', 'halicarnassus',
+    'cappadocia', 'hagia-sophia', 'basilica-cistern', 'ani', 'sumela', 'topkapi', 'selimiye',
+    'dolmabahce', 'ishak-pasha', 'anitkabir'
 )
 
 $expectations = @{
@@ -36,6 +36,13 @@ $expectations = @{
     'catalhoyuk'       = 'раскопки неолитического поселения Чатал-Хююк'
     'hattusa'          = 'Львиные ворота Хаттусы или руины хеттской столицы'
     'troy'             = 'древний город Троя: руины, стены или старинное изображение города'
+    'gordion'          = 'курганы и раскопки Гордиона, ворота или погребальные насыпи фригийской столицы'
+    'sardis'           = 'руины Сардов: храм Артемиды с высокими колоннами или гимнасий'
+    'miletus'          = 'античный театр Милета или руины ионийского города'
+    'aphrodisias'      = 'мраморные руины Афродисиаса: стадион, тетрапилон или храм'
+    'ani'              = 'руины средневекового города Ани: церкви, собор или крепостные стены в степи'
+    'sumela'           = 'монастырь Сумела на отвесной скале среди леса'
+    'ishak-pasha'      = 'дворец Ишак-паши на фоне гор, монументальное здание с куполом и минаретом'
     'ephesus'          = 'фасад библиотеки Цельса в Эфесе'
     'side'             = 'колонны храма Аполлона в Сиде, желательно у моря'
     'aspendos'         = 'римский театр Аспендоса'

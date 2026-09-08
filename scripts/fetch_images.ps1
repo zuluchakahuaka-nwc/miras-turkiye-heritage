@@ -22,6 +22,13 @@ $sites = @(
     @{ id = 'catalhoyuk';      ru = 'Чатал-Хююк';              en = 'Çatalhöyük' }
     @{ id = 'hattusa';         ru = 'Хаттуса';                 en = 'Hattusa' }
     @{ id = 'troy';            ru = 'Троя';                    en = 'Troy' }
+    @{ id = 'gordion';         ru = 'Гордион';                 en = 'Gordion' }
+    @{ id = 'sardis';          ru = 'Сарды';                   en = 'Sardis' }
+    @{ id = 'miletus';         ru = 'Милет';                   en = 'Miletus' }
+    @{ id = 'aphrodisias';     ru = 'Афродисиас';              en = 'Aphrodisias' }
+    @{ id = 'ani';             ru = 'Ани';                     en = 'Ani' }
+    @{ id = 'sumela';          ru = 'Монастырь Сумела';        en = 'Sümela Monastery' }
+    @{ id = 'ishak-pasha';     ru = 'Дворец Ишак-паши';        en = 'Ishak Pasha Palace' }
     @{ id = 'ephesus';         ru = 'Эфес';                    en = 'Ephesus' }
     @{ id = 'side';            ru = 'Сиде';                    en = 'Side, Turkey' }
     @{ id = 'aspendos';        ru = 'Аспендос';                en = 'Aspendos' }

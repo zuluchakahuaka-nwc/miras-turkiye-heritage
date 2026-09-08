@@ -15,8 +15,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('sites data', () {
-    test('has exactly 19 sites', () {
-      expect(kSites.length, 19);
+    test('has exactly 26 sites', () {
+      expect(kSites.length, 26);
     });
 
     test('site ids are unique slugs', () {
@@ -34,9 +34,25 @@ void main() {
         checkL10n(s.date, 'date', s.id);
         checkL10n(s.desc, 'desc', s.id);
         checkL10n(s.pride, 'pride', s.id);
+        checkL10n(s.legend, 'legend', s.id);
+        checkL10n(s.gettingThere, 'gettingThere', s.id);
         expect(s.desc.ru.length, greaterThan(60), reason: '${s.id} desc too short');
         expect(s.pride.ru.length, greaterThan(20), reason: '${s.id} pride too short');
+        expect(s.legend.ru.length, greaterThan(40), reason: '${s.id} legend too short');
+        expect(s.gettingThere.ru.length, greaterThan(30), reason: '${s.id} gettingThere too short');
       }
+    });
+
+    test('coordinates fall within Türkiye bounding box', () {
+      for (final s in kSites) {
+        expect(s.lat, inInclusiveRange(35.5, 42.5), reason: '${s.id} lat');
+        expect(s.lon, inInclusiveRange(25.5, 45.0), reason: '${s.id} lon');
+      }
+    });
+
+    test('formatCoords renders degrees', () {
+      final c = formatCoords(37.2233, 38.9225);
+      expect(c, '37.2233° N, 38.9225° E');
     });
 
     test('unesco years are plausible or absent', () {

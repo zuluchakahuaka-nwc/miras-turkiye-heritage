@@ -31,6 +31,9 @@ String formatYear(int year, AppLang lang) {
   return '$year';
 }
 
+String formatCoords(double lat, double lon) =>
+    '${lat.toStringAsFixed(4)}° N, ${lon.toStringAsFixed(4)}° E';
+
 class Site {
   final String id;
   final L10nText name;
@@ -40,8 +43,12 @@ class Site {
   final int? unesco;
   final bool featured;
   final int sortYear;
+  final double lat;
+  final double lon;
   final L10nText desc;
   final L10nText pride;
+  final L10nText legend;
+  final L10nText gettingThere;
   final String wikiRu;
   final String wikiEn;
 
@@ -54,8 +61,12 @@ class Site {
     this.unesco,
     this.featured = false,
     required this.sortYear,
+    required this.lat,
+    required this.lon,
     required this.desc,
     required this.pride,
+    required this.legend,
+    required this.gettingThere,
     required this.wikiRu,
     required this.wikiEn,
   });
@@ -78,6 +89,8 @@ const List<Site> kSites = [
     unesco: 2018,
     featured: true,
     sortYear: -9500,
+    lat: 37.2233,
+    lon: 38.9225,
     desc: L10nText(
       'Древнейший монументальный храм планеты — 12 000 лет. Кольца мегалитических колонн весом до 16 тонн с рельефами зверей возвели задолго до появления городов, письменности и колеса.',
       'Gezegenin en eski anıtsal tapınağı — 12.000 yıl. Kentlerin, yazının ve tekerleğin icadından çok önce, hayvan kabartmalarıyla bezeli, 16 tona kadar ağırlıkta taş kolonlardan oluşan halkalar yükseltildi.',
@@ -87,6 +100,16 @@ const List<Site> kSites = [
       'Старше Стоунхенджа на 6 тысяч лет, пирамид — на 7: цивилизация началась в Анатолии.',
       'Stonehenge\'den 6 bin, piramitlerden 7 bin yıl daha yaşlı: uygarlık Anadolu\'da başladı.',
       '6,000 years older than Stonehenge and 7,000 older than the pyramids: civilisation began in Anatolia.',
+    ),
+    legend: L10nText(
+      'Храм старше любой письменности, зато новые мифы рождаются уже в нашу эпоху: некоторые исследователи ищут здесь прообраз сада Эдема — ведь по преданию в трёх часах пути, в Шанлыурфе, родился Авраам. Кем были строители — охотники, жрецы, первые астрономы — до сих пор загадка.',
+      'Tapınak yazının icadından yaşlı; yeni efsaneler ise çağımızda doğuyor: bazı araştırmacılar burada Aden Bahçesi\'nin izini arıyor — inanışa göre üç saat ötedeki Şanlıurfa\'da İbrahim doğdu. Yapıcıların avcı mı, rahip mi, ilk gök bilimci mi olduğu hâlâ muamma.',
+      'The temple predates writing itself, yet new myths are born in our own age: some researchers seek a prototype of the Garden of Eden here — Abraham, by tradition, was born three hours away in Şanlıurfa. Who the builders were — hunters, priests, the first astronomers — remains a riddle.',
+    ),
+    gettingThere: L10nText(
+      'Из Стамбула — самолёт до Шанлыурфы (≈1,5 ч) или автобус (≈18 ч); до сайта от центра ~15 км: такси или сезонный шаттл от Археологического музея.',
+      'İstanbul\'dan Şanlıurfa\'ya uçak (≈1,5 saat) veya otobüs (≈18 saat); merkezden alana 15 km: taksi ya da Arkeoloji Müzesi\'nden sezonluk servis.',
+      'From Istanbul — flight to Şanlıurfa (≈1.5 h) or coach (≈18 h); the site is ~15 km from the centre: taxi or the seasonal shuttle from the Archaeological Museum.',
     ),
     wikiRu: 'Гёбекли-Тепе',
     wikiEn: 'Göbekli Tepe',
@@ -99,6 +122,8 @@ const List<Site> kSites = [
     era: Era.ancientWorld,
     unesco: 2012,
     sortYear: -7100,
+    lat: 37.6670,
+    lon: 32.8277,
     desc: L10nText(
       'Один из первых городов человечества: до 8 000 жителей, дома вплотную друг к другу, входы через крыши, настенные фрески и древнейший известный план поселения.',
       'İnsanlığın ilk kentlerinden biri: 8.000\'e kadar sakin, birbirine bitişik evler, çatılardan girişler, duvar resimleri ve bilinen en eski yerleşim planı.',
@@ -109,8 +134,51 @@ const List<Site> kSites = [
       '9.000 yıllık kent — Giza piramitlerinden dört bin yıl daha yaşlı. Kentleşmenin beşiği.',
       'A 9,000-year-old city — four thousand years older than the pyramids of Giza. The cradle of urban life.',
     ),
+    legend: L10nText(
+      'Из домов Чатал-Хююка вышла «Владычица зверей» — пышная богиня на троне из леопардов, прародительница анатолийской Матери-богини, которую греки спустя тысячелетия будут звать Кибелой. Здесь же найдены древнейшие в мире обсидиановые зеркала.',
+      'Çatalhöyük evlerinden «hayvanların hanımı» çıktı: leoparlar üstünde taht kuran bereket tanrıçası — yüzyıllar sonra Kybele adını alacak Anadolu Ana Tanrıça\'nın atası. Dünyanın en eski obsidyen aynaları da burada bulundu.',
+      'From its houses came the «Mistress of Animals» — a fecund goddess enthroned upon leopards, ancestor of the Anatolian Mother Goddess the Greeks would millennia later call Cybele. The world\'s oldest obsidian mirrors were found here as well.',
+    ),
+    gettingThere: L10nText(
+      'Из Стамбула — самолёт, поезд или автобус до Коньи (от 1,5 ч); от Коньи ~50 км на восток: авто или такси (≈1 ч), ориентир — посёлок Чумра.',
+      'İstanbul\'dan Konya\'ya uçak, tren ya da otobüs (1,5 saatten itibaren); Konya\'dan 50 km doğuya: araç ya da taksi (≈1 saat), Çumra yönünde.',
+      'From Istanbul — plane, train or coach to Konya (from 1.5 h); then ~50 km east by car or taxi (≈1 h), towards Çumra.',
+    ),
     wikiRu: 'Чатал-Хююк',
     wikiEn: 'Çatalhöyük',
+  ),
+  Site(
+    id: 'gordion',
+    name: L10nText('Гордион', 'Gordion', 'Gordion'),
+    region: L10nText('Анкара (Полатлы)', 'Ankara (Polatlı)', 'Ankara (Polatlı)'),
+    date: L10nText('ок. 800 г. до н. э.', 'MÖ y. 800', 'c. 800 BC'),
+    era: Era.ancientWorld,
+    unesco: 2023,
+    sortYear: -800,
+    lat: 39.7103,
+    lon: 32.3861,
+    desc: L10nText(
+      'Столица Фригии и царя Мидаса — город курганов на равнине Сакарьи. Здесь вскрыли древнейшее в мире стоящее деревянное сооружение — гробницу «Мидаса» 740 года до н. э., простоявшую нетронутой 2 700 лет.',
+      'Frigya\'nın ve Kral Midas\'ın başkenti — Sakarya ovasında tümülüs kenti. Burada dünyanın ayakta kalan en eski ahşap yapısı açıldı: MÖ 740 tarihli «Midas» mezarı, 2.700 yıl dokunulmadan kalmış.',
+      'Capital of Phrygia and King Midas — a city of burial mounds on the Sakarya plain. Here archaeologists opened the world\'s oldest standing wooden structure: the «Midas» tomb of 740 BC, untouched for 2,700 years.',
+    ),
+    pride: L10nText(
+      'Гордиев узел Александра и «золото Мидаса» родились на этой анатолийской равнине.',
+      'İskender\'in Gordion düğümü ve «Midas\'ın altını» bu Anadolu ovasında doğdu.',
+      'Alexander\'s Gordian knot and the «gold of Midas» were born on this Anatolian plain.',
+    ),
+    legend: L10nText(
+      'Здесь Александр рассёк гордиев узел, который никто не мог развязать, — «так рубят, а не развязывают!». А Мидас, наказанный Аполлоном за глупость, превращал в золото всё, к чему ни прикасался, — даже еду и собственную дочь, — и смыл дар-проклятие в водах Пактола.',
+      'Burada İskender, kimsenin çözemediği Gordion düğümünü kılıçla kesti: «Böyle çözülür!». Apollon\'un cezasıyla Midas ise dokunduğu her şeyi altına çevirdi — yemeğini, kızını bile — ve laneti Paktolos sularında yıkadı.',
+      'Here Alexander cut the knot no one could untie — «thus it is loosed!». And Midas, punished by Apollo for folly, turned all he touched to gold — even his food, even his daughter — washing the gift-curse away in the Pactolus.',
+    ),
+    gettingThere: L10nText(
+      'Из Анкары 90 км на запад до Полатлы (поезд или автобус), оттуда 10 км до Яссыхёюка; удобнее всего авто, указатели Gordion.',
+      'Ankara\'dan Polatlı\'ya 90 km (tren/otobüs), oradan Yassıhöyük\'e 10 km; en pratiği araç, Gordion tabelaları.',
+      '90 km west of Ankara to Polatlı (train or coach), then 10 km to Yassıhöyük; easiest by car, signposted «Gordion».',
+    ),
+    wikiRu: 'Гордион',
+    wikiEn: 'Gordion',
   ),
   Site(
     id: 'hattusa',
@@ -120,6 +188,8 @@ const List<Site> kSites = [
     era: Era.ancientWorld,
     unesco: 1986,
     sortYear: -1650,
+    lat: 40.0197,
+    lon: 34.6153,
     desc: L10nText(
       'Столица Хеттской державы — сверхдержавы бронзового века. Львиные и царские ворота, храм штормового бога и клинописные архивы на тысячах глиняных табличек.',
       'Tunç Çağı\'nın süper gücü Hitit İmparatorluğu\'nun başkenti. Aslanlı Kapı, Kral Kapısı, fırtına tanrısı tapınağı ve binlerce çivi yazılı tabletten oluşan arşivler.',
@@ -130,8 +200,50 @@ const List<Site> kSites = [
       'Tarihteki ilk uluslararası antlaşma — Hititler ile Mısır arasındaki Kadeş Antlaşması — burada doğdu.',
       'The world\'s first international treaty — Kadesh, between the Hittites and Egypt — was born here.',
     ),
+    legend: L10nText(
+      'Хетты оставили миф о драконе Иллуянке, которого бог грозы победил хитростью, — прообраз поединка Зевса с Тифоном и Георгия со змеем. А в архивах Хаттусы — «Песнь об Улликумми» о каменном великане, растущем из моря: за тысячу лет до греческих титанов.',
+      'Hititler, fırtına tanrısının hileyle yendiği ejderha Illuyanka efsanesini bıraktı — Zeus ile Tifon\'un ve Aziz Yorgi ile ejderhanın atası. Tabletlerde ise denizden yükselen taş dev Ullikummi\'nin destanı var: Yunan titanlarından bin yıl önce.',
+      'The Hittites left the myth of the dragon Illuyanka, defeated by the storm god\'s cunning — prototype of Zeus versus Typhon and St George and the dragon. Their tablets hold the Song of Ullikummi, a stone giant rising from the sea, a thousand years before the Greek Titans.',
+    ),
+    gettingThere: L10nText(
+      'Из Анкары ~200 км на восток до Богазкале (авто, ≈3 ч); летом — экскурсии из Анкары и Чорума; из Чорума 30 км на юг.',
+      'Ankara\'dan Boğazkale\'ye 200 km (araçla ≈3 saat); yazın Ankara ve Çorum\'dan turlar; Çorum\'dan 30 km güneye.',
+      '~200 km east of Ankara to Boğazkale by car (≈3 h); seasonal tours from Ankara and Çorum; 30 km south of Çorum.',
+    ),
     wikiRu: 'Хаттуса',
     wikiEn: 'Hattusa',
+  ),
+  Site(
+    id: 'sardis',
+    name: L10nText('Сарды', 'Sardes', 'Sardis'),
+    region: L10nText('Маниса (Салихли)', 'Manisa (Salihli)', 'Manisa (Salihli)'),
+    date: L10nText('ок. 600 г. до н. э.', 'MÖ y. 600', 'c. 600 BC'),
+    era: Era.ancientWorld,
+    sortYear: -600,
+    lat: 38.4886,
+    lon: 28.0403,
+    desc: L10nText(
+      'Столица Лидии, где около 600 года до н. э. отчеканили первые в мире монеты — из электра, золота с серебром. Гимнасий и синагога III века, храм Артемиды с колоннами-гигантами и акропольный холм Крёза.',
+      'MÖ y. 600\'de dünyanın ilk sikkelerinin — elektrumdan — darp edildiği Lidya başkenti. III. yy spor okulu ve sinagogu, dev sütunlu Artemis Tapınağı ve Kroisos\'un akropol tepesi.',
+      'Capital of Lydia, where around 600 BC the world\'s first coins were struck — of electrum, gold laced with silver. A 3rd-century gymnasium and synagogue, the giant-columned temple of Artemis, and Croesus\' acropolis hill.',
+    ),
+    pride: L10nText(
+      'Деньги изобрели в Турции: первая монета мира отчеканена здесь.',
+      'Parayı Türkiye icat etti: dünyanın ilk sikkesi burada darp edildi.',
+      'Money was invented in Türkiye: the world\'s first coin was struck here.',
+    ),
+    legend: L10nText(
+      'Царь Крёз был так богат, что имя его стало нарицательным, — но мудрец Солон сказал ему: «Пока не умрёшь, не называй себя счастливым». Спасённый с персидского костра внезапным дождём, Крёз понял правоту Солона. А золото Пактола, говорят, — это смытые омовения Мидаса.',
+      'Kral Kroisos o kadar zengindi ki adı deyim oldu; bilge Solon ise ona «ölmeden mutlu deme» dedi. Pers ateşinden aniden yağan yağmurla kurtulan Kroisos, Solon\'un haklılığını anladı. Paktolos\'un altını ise Midas\'ın yıkandığı kalıntıdır, derler.',
+      'King Croesus was so rich his name became proverbial — yet the sage Solon told him: «Call no man happy until he is dead». Saved from the Persian pyre by sudden rain, Croesus understood. The Pactolus gold, they say, is what Midas washed from his skin.',
+    ),
+    gettingThere: L10nText(
+      'Из Измира 75 км по трассе на Анкару до Салихли (автобус или поезд), затем 10 км до деревни Сарт; удобнее авто.',
+      'İzmir\'den Ankara yolunda Salihli\'ye 75 km (otobüs/tren), sonra Sart köyüne 10 km; araba daha pratik.',
+      '75 km from İzmir on the Ankara road to Salihli (coach or train), then 10 km to Sart village; a car is handier.',
+    ),
+    wikiRu: 'Сарды',
+    wikiEn: 'Sardis',
   ),
   Site(
     id: 'troy',
@@ -142,15 +254,27 @@ const List<Site> kSites = [
     unesco: 1998,
     featured: true,
     sortYear: -3000,
+    lat: 39.9572,
+    lon: 26.2385,
     desc: L10nText(
       'Девять городов, построенных друг на друге за 4 000 лет. Город Гомера и Елены: здесь Шлиман нашёл «клад Приама» и доказал, что миф — это история.',
-      '4.000 yıl içinde üst üste dokuz kent. Homeros\'un ve Helena\'nın kenti: Schliemann burada "Priamos\'un hazinesini" buldu ve efsanenin tarih olduğunu kanıtladı.',
-      'Nine cities built one atop another over 4,000 years. The city of Homer and Helen: here Schliemann found "Priam\'s treasure" and proved the myth was history.',
+      '4.000 yıl içinde üst üste dokuz kent. Homeros\'un ve Helena\'nın kenti: Schliemann burada «Priamos\'un hazinesini» buldu ve efsanenin tarih olduğunu kanıtladı.',
+      'Nine cities built one atop another over 4,000 years. The city of Homer and Helen: here Schliemann found «Priam\'s treasure» and proved the myth was history.',
     ),
     pride: L10nText(
       '«Илиада» начинается на турецкой земле — Троя стоит здесь пять тысяч лет.',
-      '"İlyada" Türk topraklarında başlar — Truva burada beş bin yıldır ayakta.',
+      '«İlyada» Türk topraklarında başlar — Truva burada beş bin yıldır ayakta.',
       'The Iliad begins on Turkish soil — Troy has stood here for five thousand years.',
+    ),
+    legend: L10nText(
+      'Гомер воспел здесь гнев Ахилла и гибель Гектора, Елену, «прекраснейшую из женщин», и хитроумного Одиссея; деревянный конь вошёл в пословицы всех народов. А в 1873 году Шлиман, веря «Илиаде» буквально, вырыл «клад Приама» — и нашёл за мифом настоящий город.',
+      'Homeros burada Akhilleus\'un öfkesini ve Hektor\'un ölümünü, «en güzel kadın» Helena\'yı ve kurnaz Odysseus\'u ezberletti; tahta at bütün dillerde deyim oldu. 1873\'te Schliemann, İlyada\'ya harfiyen inanarak «Priamos\'un hazinesini» çıkardı — efsanenin ardında gerçek bir kent buldu.',
+      'Homer sang here of Achilles\' wrath and Hector\'s death, of Helen, «the most beautiful of women», and wily Odysseus; the wooden horse entered every language. In 1873 Schliemann, taking the Iliad literally, dug up «Priam\'s treasure» — and found a real city behind the myth.',
+    ),
+    gettingThere: L10nText(
+      'Из Стамбула — автобус или авто через Дарданеллы до Чанаккале (≈5 ч), далее 30 км до деревни Тэвфикие; летом — паром из Гелиболу.',
+      'İstanbul\'dan Çanakkale\'ye otobüs ya da araç (≈5 saat), sonra Tevfikiye köyüne 30 km; yazın Gelibolu\'dan feribot.',
+      'From Istanbul — coach or car across the Dardanelles to Çanakkale (≈5 h), then 30 km to Tevfikiye village; summer ferries from Gelibolu.',
     ),
     wikiRu: 'Троя',
     wikiEn: 'Troy',
@@ -164,15 +288,27 @@ const List<Site> kSites = [
     unesco: 2015,
     featured: true,
     sortYear: -1000,
+    lat: 37.9411,
+    lon: 27.3419,
     desc: L10nText(
       'Жемчужина римской Азии: библиотека Цельса, Большой театр на 24 000 зрителей, улица Куретов. Рядом стоял Артемисион — одно из семи чудес света.',
       'Roma Asyası\'nın incisi: Celsus Kütüphanesi, 24.000 kişilik Büyük Tiyatro, Kuretler Caddesi. Yakınında yedi harikadan biri olan Artemis Tapınağı yükseliyordu.',
       'Jewel of Roman Asia: the Library of Celsus, the Great Theatre seating 24,000, Curetes Street. The Temple of Artemis — one of the Seven Wonders — stood nearby.',
     ),
     pride: L10nText(
-      'Город-миллионик античности и чудо света Артемисион: мраморные улицы помнят Клеопатру.',
+      'Город-миллионник античности и чудо света Артемисион: мраморные улицы помнят Клеопатру.',
       'Antik dünyanın milyonluk kenti ve Artemis harikası: mermer sokaklar Kleopatra\'yı hatırlar.',
       'An ancient metropolis of a million and the Wonder of Artemis: its marble streets remember Cleopatra.',
+    ),
+    legend: L10nText(
+      'По преданию, город основал афинянин Андрокл, которому оракул велел искать место, указанное рыбой и вепрем. Святилище же Артемиды, по мифу, основали ещё амазонки. Здесь проповедовал апостол Павел, а Дева Мария провела последние годы в домике на холме Бюльбюль.',
+      'Rivayete göre kenti Atinalı Androklos kurdu; kahin ona yeri bir balıkla bir yaban domuzunun göstereceğini söyledi. Artemis tapınağını ise, mitte, Amazonlar kurdu. Aziz Pavlus burada vaaz verdi; Meryem Ana son yıllarını Bülbül Dağı\'ndaki evde geçirdi.',
+      'Tradition says the Athenian Androklos founded the city where a fish and a boar would point the way; the shrine of Artemis, myth holds, was raised by the Amazons themselves. St Paul preached here, and the Virgin Mary spent her last years in a house on Bülbül hill.',
+    ),
+    gettingThere: L10nText(
+      'Ближайший город — Сельчук (3 км): из Измира поезд или автобус ~1 ч, из Кушадасы долмуш 20 мин; аэропорты Измир (60 км) и Бодрум (130 км).',
+      'En yakın merkez Selçuk (3 km): İzmir\'den tren/otobüs ~1 saat, Kuşadası\'ndan dolmuş 20 dakika; havalimanları İzmir (60 km) ve Bodrum (130 km).',
+      'Nearest town is Selçuk (3 km): ~1 h from İzmir by train or coach, 20 min dolmuş from Kuşadası; airports at İzmir (60 km) and Bodrum (130 km).',
     ),
     wikiRu: 'Эфес',
     wikiEn: 'Ephesus',
@@ -185,6 +321,8 @@ const List<Site> kSites = [
     era: Era.antiquity,
     featured: true,
     sortYear: -700,
+    lat: 36.7667,
+    lon: 31.3833,
     desc: L10nText(
       'Город-музей под открытым небом: храм Аполлона, чьи колонны горят на закате, римский театр, агора и древний водовод — руины среди апельсиновых садов и моря.',
       'Açık hava müzesi kent: gün batımında yanan sütunlarıyla Apollon Tapınağı, Roma tiyatrosu, agora ve antik su kemeri — portakal bahçeleriyle denizin arasına gömülü kalıntılar.',
@@ -194,6 +332,16 @@ const List<Site> kSites = [
       'Пять колонн Аполлона на закате — самая узнаваемая открытка Средиземноморья.',
       'Gün batımındaki beş Apollon sütunu, Akdeniz\'in en tanınan kartpostalı.',
       'The five columns of Apollo at sunset — the Mediterranean\'s most recognisable postcard.',
+    ),
+    legend: L10nText(
+      '«Сиде» по-анатолийски — «гранат», символ изобилия и царской власти: на монетах города чеканили гранат, а не царя. Пять уцелевших колонн храма Аполлона местные зовут «вратами заката» — по романтичной молве, под ними клялась в любви сама Клеопатра.',
+      '«Side» Anadolu dilinde «nar» demek — bolluğun ve krallığın simgesi: kentin sikkelerinde kral değil nar basılıydı. Apollon Tapınağı\'nın beş sütununa halk «gün batımı kapısı» der; romantik rivayete göre altında Kleopatra bile yemin etmiş.',
+      '«Side» means pomegranate in the Anatolian tongue — symbol of abundance and royalty: the city\'s coins bore a pomegranate, not a king. Locals call the five surviving columns the «gates of sunset»; romantic lore even has Cleopatra swearing love beneath them.',
+    ),
+    gettingThere: L10nText(
+      'Из Антальи 75 км на восток (автобус или авто, ≈1,5 ч) до Манавгата, затем 7 км; из Аланьи 65 км на запад; долмуши идут прямо до античного города.',
+      'Antalya\'dan 75 km doğuya (otobüs/araç, ≈1,5 saat) Manavgat\'a, sonra 7 km; Alanya\'dan 65 km batıya; dolmuşlar antik kente kadar gider.',
+      '75 km east of Antalya (coach/car, ≈1.5 h) to Manavgat, then 7 km; 65 km west of Alanya; dolmuşes run right to the ancient city.',
     ),
     wikiRu: 'Сиде',
     wikiEn: 'Side, Turkey',
@@ -205,6 +353,8 @@ const List<Site> kSites = [
     date: L10nText('155 г.', 'MS 155', 'AD 155'),
     era: Era.antiquity,
     sortYear: 155,
+    lat: 36.9389,
+    lon: 31.1722,
     desc: L10nText(
       'Римский театр на 15 000 зрителей — лучше всех сохранившийся в мире. Каждое лето здесь звучат оперные арии международного фестиваля.',
       '15.000 kişilik Roma tiyatrosu — dünyada en iyi korunmuş olanı. Her yaz uluslararası festivalin opera aryaları burada yankılanır.',
@@ -214,6 +364,16 @@ const List<Site> kSites = [
       'Акустика, рассчитанная 19 веков назад, работает без единого микрофона.',
       '19 yüzyıl önce hesaplanan akustik, tek bir mikrofonsuz bile çalışıyor.',
       'Acoustics calculated 19 centuries ago still work without a single microphone.',
+    ),
+    legend: L10nText(
+      'Царь объявил: дочь достанется зодчему, чьё творение лучше всех. Конкурс шёл между строителями акведука и театра. Когда отец шепнул в верхнем ряду «дочь — твоя», голос услыхал зодчий театра внизу: совершенная акустика победила.',
+      'Kral, kızını en iyi yapıtı inşa edene vadediyordu. Yarış su kemeriyle tiyatro arasında geçti. Kral en üst sırada fısıldadığı «kızım senin» sözünü en alttaki mimar duydu: kusursuz akustik kazandı.',
+      'The king vowed his daughter to the finest builder. The contest ran between the aqueduct and the theatre. When the father whispered «my daughter is yours» from the top row, the theatre\'s architect heard it below: perfect acoustics won.',
+    ),
+    gettingThere: L10nText(
+      'Из Антальи 40 км на восток по трассе D400 до Серика, затем 8 км на север; удобнее авто или экскурсия, указатели Aspendos.',
+      'Antalya\'dan D400 üzerinden Serik\'e 40 km, sonra 8 km kuzeye; en pratiği araç ya da tur, Aspendos tabelaları.',
+      '40 km east of Antalya on the D400 to Serik, then 8 km north; easiest by car or tour, signposted «Aspendos».',
     ),
     wikiRu: 'Аспендос',
     wikiEn: 'Aspendos',
@@ -226,6 +386,8 @@ const List<Site> kSites = [
     era: Era.antiquity,
     unesco: 2014,
     sortYear: -300,
+    lat: 39.1326,
+    lon: 27.1836,
     desc: L10nText(
       'Столица Пергамского царства: самый крутой театр античного мира, алтарь Зевса и Асклепион — древнейший медицинский центр Средиземноморья.',
       'Bergama Krallığı\'nın başkenti: antik dünyanın en dik tiyatrosu, Zeus Sunağı ve Akdeniz\'in en eski sağlık merkezi Asklepion.',
@@ -236,8 +398,83 @@ const List<Site> kSites = [
       'Parşömen burada icat edildi ve adını kentten aldı.',
       'Parchment was invented here — and named after the city.',
     ),
+    legend: L10nText(
+      'Здесь Асклепий, бог врачевания с посохом и змеёй, принимал страждущих «храмовым сном»: жрецы толковали сны и прописывали источники. А когда Птолемей запретил вывоз папируса, пергамцы стали писать на выделанной коже — и «пергамент» получил имя города.',
+      'Burada yılanlı asalı tabip tanrı Asklepios hastaları tapınak uykusuna yatırırdı; rahipler rüyaları yorumlar, şifalı pınarlar önerirdi. Ptolemaios papirüs ihracını yasaklayınca Bergamalılar deri üzerine yazmaya başladı — «parşömen» kentin adını aldı.',
+      'Here Asclepius, the serpent-staffed god of healing, took the sick into temple sleep: priests read dreams and prescribed the springs. And when Ptolemy banned papyrus exports, Pergamenes began to write on dressed skin — and «parchment» took the city\'s name.',
+    ),
+    gettingThere: L10nText(
+      'Бергама — 105 км к северу от Измира (автобус ≈2 ч); к акрополю ведёт канатная дорога; из Стамбула автобус ≈6 ч или самолёт до Измира.',
+      'Bergama, İzmir\'in 105 km kuzeyinde (otobüs ≈2 saat); akropole teleferikle çıkılır; İstanbul\'dan otobüs ≈6 saat ya da İzmir\'e uçuş.',
+      'Bergama is 105 km north of İzmir (coach ≈2 h); a cable car climbs to the acropolis; from Istanbul ~6 h by coach or fly to İzmir.',
+    ),
     wikiRu: 'Пергам',
     wikiEn: 'Pergamon',
+  ),
+  Site(
+    id: 'miletus',
+    name: L10nText('Милет', 'Milet', 'Miletus'),
+    region: L10nText('Айдын (Дидим)', 'Aydın (Didim)', 'Aydın (Didim)'),
+    date: L10nText('VI в. до н. э.', 'MÖ 6. yüzyıl', '6th c. BC'),
+    era: Era.antiquity,
+    sortYear: -600,
+    lat: 37.5306,
+    lon: 27.2261,
+    desc: L10nText(
+      'Родина философии: здесь Фалес первым спросил «из чего всё?» и предсказал затмение 585 года до н. э. Город дал миру прямоту улиц Гипподама, театр на 15 000 и сто гаваней.',
+      'Felsefenin doğduğu yer: Thales burada ilk kez «her şeyin kaynağı nedir?» diye sordu ve MÖ 585 tutulmasını önceden bildirdi. Kent, Hipodamos\'un ızgara planını, 15.000 kişilik tiyatroyu ve yüzlerce limanı dünyaya verdi.',
+      'The birthplace of philosophy: here Thales first asked «what is everything made of?» and foretold the eclipse of 585 BC. The city gave the world Hippodamos\' grid of straight streets, a theatre of 15,000 and a hundred harbours.',
+    ),
+    pride: L10nText(
+      'Первый научный вопрос истории задан в Анатолии: «из чего состоит мир?»',
+      'Tarihteki ilk bilimsel soru Anadolu\'da soruldu: «Evren neden yapılmıştır?»',
+      'The first scientific question in history was asked in Anatolia: «what is the universe made of?»',
+    ),
+    legend: L10nText(
+      'Фалес, предсказав богатый урожай оливок, заранее скупил все прессы и разбогател — доказав, что мудрецу легко нажить деньги, коли захочет. А «милетские байки» стали у греков синонимом небылиц: слишком чудными были рассказы купцов о дальних морях.',
+      'Thales, zeytin rekoltesini önceden bilip bütün presleri kiraladı ve zengin oldu: «bilge istese zengin olur» dersini verdi. «Milet masalları» ise Yunanca\'da uydurma hikâye demek oldu — limandan dönen tacirlerin anlattıkları o kadar şaşırtıcıydı ki.',
+      'Thales, foreseeing a bumper olive harvest, hired every press in advance and grew rich — proving a philosopher can be wealthy whenever he wishes. And «Milesian tales» became the Greek byword for tall stories: so wondrous were the merchants\' tales of far seas.',
+    ),
+    gettingThere: L10nText(
+      'Из Измира 120 км или из Кушадасы 50 км через Дидим до Балата; ходят автобусы Дидим—Балат; удобнее авто из Кушадасы или Бодрума.',
+      'İzmir\'den 120 km ya da Kuşadası\'ndan Didim üzerinden Balat\'a 50 km; Didim-Balat otobüsleri var; Kuşadası/Bodrum\'dan araçla daha rahat.',
+      '120 km from İzmir or 50 km from Kuşadası via Didim to Balat; Didim–Balat minibuses run; easier by car from Kuşadası or Bodrum.',
+    ),
+    wikiRu: 'Милет',
+    wikiEn: 'Miletus',
+  ),
+  Site(
+    id: 'aphrodisias',
+    name: L10nText('Афродисиас', 'Afrodisias', 'Aphrodisias'),
+    region: L10nText('Айдын (Карасую)', 'Aydın (Karacasu)', 'Aydın (Karacasu)'),
+    date: L10nText('II в. до н. э.', 'MÖ 2. yüzyıl', '2nd c. BC'),
+    era: Era.antiquity,
+    unesco: 2017,
+    sortYear: -200,
+    lat: 37.7083,
+    lon: 28.7236,
+    desc: L10nText(
+      'Город Афродиты из белого мрамора: школа скульпторов, чьи мастера выполняли заказы от Рима до Ближнего Востока. Стадион на 30 000 — целее любого другого античного, храм Афродиты и ворота-тетрапилон.',
+      'Beyaz mermerden Afrodit kenti: ustaları Roma\'dan Doğu Akdeniz\'e sipariş alan heykel okulu. 30.000 kişilik stadyum — antik dünyada en sağlam kalan — Afrodit Tapınağı ve gül kabartmalı tetrapylon.',
+      'A city of white marble for Aphrodite: a sculptors\' school whose masters took commissions from Rome to the Levant. A stadium of 30,000 — the best preserved of antiquity — the temple of Aphrodite and the rose-carved tetrapylon gate.',
+    ),
+    pride: L10nText(
+      'Мраморная мастерская империи: статуи отсюда стояли от Испании до Сирии.',
+      'İmparatorluğun mermer atölyesi: buradan çıkan heykeller İspanya\'dan Suriye\'ye dikildi.',
+      'The empire\'s marble workshop: statues from here stood from Spain to Syria.',
+    ),
+    legend: L10nText(
+      'Город носил имя богини любви — и мрамор здесь резали так нежно, что, кажется, вены на каменных пальцах пульсируют. По местному сказанию, источник у храма дарил красоту: римляне приезжали сюда «лечить сердце» за тысячу лет до появления курортов Эгеи.',
+      'Kent aşk tanrıçasının adını taşırdı; mermer öyle ince yontulurdu ki taş parmaklardaki damarlar atıyor sanılırdı. Rivayete göre tapınaktaki pınar güzellik verirdi: Romalılar «kalbi iyileştirmeye» buraya gelirdi.',
+      'The city bore the name of the goddess of love — and the marble was carved so tenderly the veins in stone fingers seem to pulse. Local tale says the shrine\'s spring granted beauty: Romans came here «to heal the heart» a thousand years before the Aegean resorts.',
+    ),
+    gettingThere: L10nText(
+      'Из Денизли ~100 км, из Измира ~180 км через Карасую; общественного транспорта мало — лучше авто, указатели Geyre/Afrodisias.',
+      'Denizli\'den ≈100 km, İzmir\'den Karacasu üzerinden ≈180 km; toplu taşıma az — araç önerilir, Geyre/Afrodisias tabelaları.',
+      '~100 km from Denizli, ~180 km from İzmir via Karacasu; public transport is scarce — a car is best; follow Geyre/Aphrodisias signs.',
+    ),
+    wikiRu: 'Афродисиас',
+    wikiEn: 'Aphrodisias',
   ),
   Site(
     id: 'nemrut',
@@ -247,6 +484,8 @@ const List<Site> kSites = [
     era: Era.antiquity,
     unesco: 1987,
     sortYear: -62,
+    lat: 37.9806,
+    lon: 38.7408,
     desc: L10nText(
       'Святилище царя Коммагены на вершине 2 150 метров: десятиметровые статуи богов и Антиоха I, обращённые к восходу и закату.',
       '2.150 metrelik zirvede Kommagene kralının kutsal alanı: doğuşa ve batışa bakan, on metrelik tanrı ve I. Antiokhos heykelleri.',
@@ -254,8 +493,18 @@ const List<Site> kSites = [
     ),
     pride: L10nText(
       '«Восьмое чудо света» — колоссы, построенные выше облаков.',
-      '"Sekizinci harika" — bulutların üzerine inşa edilmiş dev heykeller.',
-      'The "eighth wonder of the world" — colossi built above the clouds.',
+      '«Sekizinci harika» — bulutların üzerine inşa edilmiş dev heykeller.',
+      'The «eighth wonder of the world» — colossi built above the clouds.',
+    ),
+    legend: L10nText(
+      'Антиох объявил себя «другом римлян и греков», а кровью — потомком Александра и Дария. Он воздвиг себе гробницу-святилище среди звёзд и велел жрецам чтить своё «богоявление» ежемесячно. Саму гробницу ищут до сих пор: под 50-метровым курганом её не нашли.',
+      'Antiokhos kendini «Romalıların ve Yunanlıların dostu» ilan etti; kan olarak ise Büyük İskender ile Darius\'un varisi saydı. Yıldızların arasına kendine tapınak-mezar yükseltti, rahiplere her ay «tanrısal görünüşünü» anmayı buyurdu. Mezarın kendisi hâlâ bulunamadı: 50 metrelik tümülüsün altında.',
+      'Antiochus styled himself «friend of Romans and Greeks» — and by blood heir of Alexander and Darius. He raised his tomb-sanctuary among the stars and ordered priests to honour his divine manifestation monthly. The tomb itself is still sought: hidden beneath the fifty-metre mound.',
+    ),
+    gettingThere: L10nText(
+      'База — Адыяман или Кахта: из Адыямана ~85 км, из Малатьи ~140 км; финал — серпантин на 2 150 м; на рассвет выезжают в 2–3 ночи; сезон — с мая по октябрь.',
+      'Üs Adıyaman ya da Kahta: Adıyaman\'dan ≈85 km, Malatya\'dan ≈140 km; son tırmanış 2.150 m\'ye sarma yolla; şafak için gece 02-03\'te çıkılır; sezon mayıs-ekim.',
+      'Base in Adıyaman or Kahta: ~85 km from Adıyaman, ~140 km from Malatya; the last switchbacks climb to 2,150 m; sunrise tours leave at 2–3 a.m.; season May to October.',
     ),
     wikiRu: 'Немрут-Даг',
     wikiEn: 'Mount Nemrut',
@@ -268,15 +517,27 @@ const List<Site> kSites = [
     era: Era.antiquity,
     unesco: 1988,
     sortYear: -200,
+    lat: 37.9236,
+    lon: 29.1223,
     desc: L10nText(
       'Белоснежные травертиновые террасы горячих источников — «хлопковый замок», а рядом священный Иераполь: некрополь на 1 200 гробниц и бассейн Клеопатры.',
-      'Sıcak kaynakların beyaz traverten terasları — "pamuk kalesi"; yanı başında kutsal kent Hierapolis: 1.200 mezarlık nekropol ve Kleopatra Havuzu.',
-      'Snow-white travertine terraces of hot springs — the "cotton castle" — beside sacred Hierapolis: a 1,200-tomb necropolis and Cleopatra\'s Pool.',
+      'Sıcak kaynakların beyaz traverten terasları — «pamuk kalesi»; yanı başında kutsal kent Hierapolis: 1.200 mezarlık nekropol ve Kleopatra Havuzu.',
+      'Snow-white travertine terraces of hot springs — the «cotton castle» — beside sacred Hierapolis: a 1,200-tomb necropolis and Cleopatra\'s Pool.',
     ),
     pride: L10nText(
       'Природное чудо и античный город в одном месте: мраморные каскады, которым миллионы лет.',
       'Doğa harikası ve antik kent bir arada: milyonlarca yıllık mermer basamaklar.',
       'A natural wonder and an ancient city in one place: marble cascades millions of years in the making.',
+    ),
+    legend: L10nText(
+      'Старики говорят: великаны сушили здесь собранный хлопок, да так и бросили — и белые вороха окаменели. А «бассейн Клеопатры», по преданию, подарен царице Марком Антонием: античные колонны до сих пор стоят прямо в тёплой воде.',
+      'Yaşlılar der ki: devler topladıkları pamuğu burada kurumaya bıraktı, öylece unuttu — beyaz yığınlar taşa döndü. «Kleopatra Havuzu» ise, rivayete göre, Marcus Antonius\'un kraliçeye hediyesi: antik sütunlar sıcak suda hâlâ ayakta.',
+      'Elders say giants left their harvested cotton here to dry and forgot it — and the white heaps turned to stone. Cleopatra\'s Pool, by tradition, was Mark Antony\'s gift to the queen: ancient columns still stand in the warm water.',
+    ),
+    gettingThere: L10nText(
+      'Из Денизли 20 км на север (долмуш или такси, 30 мин); из Измира автобус или поезд ~4 ч; по травертинам ходят босиком.',
+      'Denizli\'den 20 km kuzey (dolmuş/taksi, 30 dk); İzmir\'den otobüs/tren ≈4 saat; travertenlere yalın ayak girilir.',
+      '20 km north of Denizli (dolmuş/taxi, 30 min); ~4 h from İzmir by coach or train; you walk the travertines barefoot.',
     ),
     wikiRu: 'Памуккале',
     wikiEn: 'Pamukkale',
@@ -288,6 +549,8 @@ const List<Site> kSites = [
     date: L10nText('V в. до н. э.', 'MÖ 5. yüzyıl', '5th c. BC'),
     era: Era.antiquity,
     sortYear: -500,
+    lat: 36.2592,
+    lon: 29.9853,
     desc: L10nText(
       'Ликийские скальные гробницы-фасады, огромный римский театр и церковь Святого Николая — прообраза Санта-Клауса, епископа Миры.',
       'Kayalara oyulmuş Likya mezar cepheleri, dev Roma tiyatrosu ve Noel Baba\'nın öncüsü, Myra piskoposu Aziz Nikola Kilisesi.',
@@ -296,7 +559,17 @@ const List<Site> kSites = [
     pride: L10nText(
       'Санта-Клаус — из Турции: Святой Николай родился и служил в Ликии.',
       'Noel Baba Türkiye\'den: Aziz Nikola Likya\'da doğdu ve görev yaptı.',
-      'Santa Claus is from Turkey: St Nicholas was born and served in Lycia.',
+      'Santa Claus is from Türkiye: St Nicholas was born and served in Lycia.',
+    ),
+    legend: L10nText(
+      'Человеку, придумавшему рождественские подарки, — святому Николаю — молва приписывает первый тайный дар: ночью он забросил в окно бедного дома три кошелька золота, спасая дочерей от рабства. Отсюда и Санта-Клаус, и носок у камина.',
+      'Rivayete göre Aziz Nikola gece yarısı yoksul bir evin penceresinden üç kesek altın attı, kızları kölelikten kurtardı. Santa Claus da, bacadaki çorap da buradan gelir.',
+      'To the man who invented Christmas presents — St Nicholas — lore attributes the first secret gift: by night he threw three purses of gold through a poor family\'s window, saving the daughters from slavery. Hence Santa Claus — and the stocking by the chimney.',
+    ),
+    gettingThere: L10nText(
+      'Демре — 140 км от Антальи по трассе D400 (≈2,5 ч) и 180 км от Фетхие; автобусы и долмуши до Демре, от центра пешком 1,5 км.',
+      'Demre: Antalya\'dan D400 ile 140 km (≈2,5 saat), Fethiye\'den 180 km; Demre\'ye otobüs/dolmuş, merkezden 1,5 km yürüyüş.',
+      'Demre is 140 km from Antalya on the D400 (≈2.5 h) and 180 km from Fethiye; buses/dolmuşes to Demre, then a 1.5 km walk from the centre.',
     ),
     wikiRu: 'Мира (Ликия)',
     wikiEn: 'Myra',
@@ -308,6 +581,8 @@ const List<Site> kSites = [
     date: L10nText('350 г. до н. э.', 'MÖ 350', '350 BC'),
     era: Era.antiquity,
     sortYear: -350,
+    lat: 37.0379,
+    lon: 27.4241,
     desc: L10nText(
       'Мавзолей Мавсола — одно из семи чудес света, около 45 метров высотой, с фризом сражающихся амазонок. Сегодня — гордые руины над бухтой Бодрума.',
       'Yedi harikadan biri Mausoleion — yaklaşık 45 metre yüksekliğinde, savaşan Amazon kabartmalarıyla bezeli. Bugün Bodrum koyunun üzerinde gururlu kalıntılar.',
@@ -315,8 +590,18 @@ const List<Site> kSites = [
     ),
     pride: L10nText(
       'Второе чудо света на турецкой земле; само слово «мавзолей» родилось здесь.',
-      'Türk topraklarında ikinci dünya harikası; "mozole" kelimesi burada doğdu.',
-      'A second Wonder of the World on Turkish soil; the very word "mausoleum" was born here.',
+      'Türk topraklarında ikinci dünya harikası; «mozole» kelimesi burada doğdu.',
+      'A second Wonder of the World on Turkish soil; the very word «mausoleum» was born here.',
+    ),
+    legend: L10nText(
+      'Царица Артемисия — женщина-адмирал, сражавшаяся за персов при Саламине, — правила отсюда морем. Мавзолей же воздвигла другая Артемисия, любя: по преданию, она выпила прах мужа Мавсола с вином, чтобы стать его живой гробницей.',
+      'Kraliçe Artemisia — Salamis\'te Persler için savaşan kadın amiral — buradan denize hükmetti. Mozole\'yi ise bir başka Artemisia, kocası Mausolos\'a aşkından yaptırdı; rivayete göre küllerini şarapla içip «yaşayan mezar» oldu.',
+      'Queen Artemisia — the woman admiral who fought for Persia at Salamis — ruled these seas. The mausoleum another Artemisia raised out of love: tradition says she drank her husband Mausolus\' ashes with wine to become his living tomb.',
+    ),
+    gettingThere: L10nText(
+      'Бодрум, центр: от гавани 15 мин пешком в гору; аэропорт Бодрум (BJV) 35 км; из Измира автобус ≈4 ч.',
+      'Bodrum merkez: marinanın üstünde 15 dk yürüyüş; Bodrum (BJV) havalimanı 35 km; İzmir\'den otobüs ≈4 saat.',
+      'Central Bodrum: a 15-minute uphill walk from the marina; Bodrum airport (BJV) 35 km; ~4 h from İzmir by coach.',
     ),
     wikiRu: 'Галикарнасский мавзолей',
     wikiEn: 'Mausoleum at Halicarnassus',
@@ -329,15 +614,27 @@ const List<Site> kSites = [
     era: Era.byzantium,
     unesco: 1985,
     sortYear: 400,
+    lat: 38.6183,
+    lon: 34.8672,
     desc: L10nText(
       'Долина «волшебных дымоходов»: пещерные церкви с фресками и подземные города Деринкую и Каймаклы — до 20 000 жителей, глубиной до 85 метров.',
-      '"Peri bacaları" vadisi: freskli kaya kiliseleri ve 20.000 kişiye kadar barındıran, 85 metreye inen Derinkuyu ile Kaymaklı yeraltı kentleri.',
-      'The valley of "fairy chimneys": cave churches with frescoes and the underground cities of Derinkuyu and Kaymaklı — up to 20,000 people, 85 m deep.',
+      '«Peri bacaları» vadisi: freskli kaya kiliseleri ve 20.000 kişiye kadar barındıran, 85 metreye inen Derinkuyu ile Kaymaklı yeraltı kentleri.',
+      'The valley of «fairy chimneys»: cave churches with frescoes and the underground cities of Derinkuyu and Kaymaklı — up to 20,000 people, 85 m deep.',
     ),
     pride: L10nText(
       'Целые города под землёй: восемь этажей тоннелей — инженерия на полторы тысячи лет вперёд.',
       'Yerin altında koca kentler: sekiz katlı tüneller — 1.500 yıl ileride mühendislik.',
       'Whole cities underground: eight storeys of tunnels — engineering 1,500 years ahead of its time.',
+    ),
+    legend: L10nText(
+      'Народ окрестил башни «пери бакылары» — дымоходами фей: по сказаниям, в них жили добрые духи, стерегущие долины. А под землёй, по преданию, от гонений укрывались первые христиане — целые общины годами не видели солнца.',
+      'Halk bu kuleleri «peri bacaları» adıyla andı; masallarda içlerinde vadileri koruyan iyicil ruhlar yaşardı. Derinkuyu\'da ise, rivayete göre, ilk Hristiyanlar baskılardan yıllarca yerin altında saklandı, güneşi görmedi.',
+      'People named the towers «fairy chimneys»: in tale, kindly spirits dwelt within, guarding the valleys. And underground, tradition holds, the first Christians hid from persecution — whole congregations living for years without the sun.',
+    ),
+    gettingThere: L10nText(
+      'Аэропорты Невшехир (45 км до Гёреме) и Кайсери (75 км); из Стамбула самолёт 1,5 ч; между долинами — долмуши и экскурсии; рассвет встречают на воздушном шаре.',
+      'Havalimanları: Nevşehir (Göreme\'ye 45 km) ve Kayseri (75 km); İstanbul\'dan 1,5 saatlik uçuş; vadiler arası dolmuş ve turlar; şafak balonla karşılanır.',
+      'Airports at Nevşehir (45 km to Göreme) and Kayseri (75 km); 1.5 h flight from Istanbul; dolmuşes and tours link the valleys; dawn belongs to the balloons.',
     ),
     wikiRu: 'Каппадокия',
     wikiEn: 'Cappadocia',
@@ -351,6 +648,8 @@ const List<Site> kSites = [
     unesco: 1985,
     featured: true,
     sortYear: 537,
+    lat: 41.0086,
+    lon: 28.9800,
     desc: L10nText(
       'Купол диаметром 31 метр, парящий на высоте 55 метров. Тысячу лет — крупнейший храм христианского мира, затем мечеть султанов, сегодня — действующая мечеть.',
       '55 metre yükseklikte süzülen 31 metre çaplı kubbe. Bin yıl Hristiyan dünyasının en büyük tapınağı, sonra sultanların camisi, bugün ibadete açık cami.',
@@ -358,8 +657,18 @@ const List<Site> kSites = [
     ),
     pride: L10nText(
       'Юстиниан воскликнул: «Соломон, я превзошёл тебя!» — и тысячу лет равного не построили.',
-      'Iustinianos haykırdı: "Süleyman, seni geçtim!" — ve bin yıl boyunca eşi yapılamadı.',
-      'Justinian exclaimed: "Solomon, I have surpassed you!" — and for a thousand years nothing matched it.',
+      'Iustinianos haykırdı: «Süleyman, seni geçtim!» — ve bin yıl boyunca eşi yapılamadı.',
+      'Justinian exclaimed: «Solomon, I have surpassed you!» — and for a thousand years nothing matched it.',
+    ),
+    legend: L10nText(
+      'Молящиеся верили, что купол висит на цепи, спущенной с неба, — настолько лёгким он казался. А «плачущая колонна» исцеляет до сих пор: вложи палец в медное гнездо — и он станет влажным.',
+      'İbadet edenler kubbenin gökten sarkan bir zincirle tutulduğuna inanırdı — o kadar hafif görünürdü. «Ağlayan sütun» ise hâlâ şifa dağıtır: parmağını bakır deliğe sok, nemlendiğini gör.',
+      'Worshippers believed the dome hung from heaven on a chain, so weightless did it seem. The «weeping column» still heals: put a finger into the copper socket and feel the moisture.',
+    ),
+    gettingThere: L10nText(
+      'Стамбул, Султанахмет: трамвай T1 до остановки Sultanahmet; аэропорты IST и SAW; от пристани Эминоню 20 минут пешком.',
+      'İstanbul, Sultanahmet: T1 tramvayı (Sultanahmet durağı); havalimanları IST ve SAW; Eminönü iskelesinden 20 dk yürüme.',
+      'Istanbul, Sultanahmet: tram T1 to Sultanahmet stop; airports IST and SAW; 20 min on foot from the Eminönü piers.',
     ),
     wikiRu: 'Айя-София',
     wikiEn: 'Hagia Sophia',
@@ -371,6 +680,8 @@ const List<Site> kSites = [
     date: L10nText('532 г.', 'MS 532', 'AD 532'),
     era: Era.byzantium,
     sortYear: 532,
+    lat: 41.0082,
+    lon: 28.9779,
     desc: L10nText(
       'Подземный водный дворец на 80 000 м³: 336 колонн, светящиеся в темноте карпы и перевёрнутая голова Медузы Горгоны.',
       '80.000 m³\'lük yeraltı su sarayı: 336 sütun, karanlıkta ışıldayan sazanlar ve baş aşağı duran Medusa başı.',
@@ -381,8 +692,83 @@ const List<Site> kSites = [
       'Iustinianos\'un su deposu hâlâ ayakta — 15 yüzyıl, onarımsız.',
       'Justinian\'s reservoir still stands — 15 centuries without major repair.',
     ),
+    legend: L10nText(
+      'Две головы Медузы Горгоны лежат здесь на боку и вверх ногами — «обезвреженные», чтобы не обращать в камень; кто и зачем их повернул, неизвестно. А за 336 колоннами цистерну прозвали Yerebatan — «тонущий дворец»: рыбаки будто бы ловили рыбу прямо под улицами города.',
+      'İki Meduza başı yan ve ters yatıyor — taşa çevirmesinler diye «etkisiz» bırakılmış; kim, neden çevirdi, bilinmiyor. 336 sütunun ardından sarnıca Yerebatan — «batık saray» dendi: balıkçılar sokakların altında balık tuttu, derler.',
+      'Two Medusa heads lie sideways and upside down — «disarmed» lest they petrify; who turned them, and why, nobody knows. Behind 336 columns the cistern earned the name Yerebatan, «sunken palace»: fishermen, they say, hauled catches from beneath the city streets.',
+    ),
+    gettingThere: L10nText(
+      'Стамбул, Султанахмет: 150 метров к юго-западу от Айя-Софии, вход с улицы Yerebatan Caddesi; трамвай T1.',
+      'İstanbul, Sultanahmet: Ayasofya\'nın 150 m güneybatısında, giriş Yerebatan Caddesi\'nden; T1 tramvayı.',
+      'Istanbul, Sultanahmet: 150 m southwest of Hagia Sophia, entrance from Yerebatan Caddesi; tram T1.',
+    ),
     wikiRu: 'Цистерна Базилика',
     wikiEn: 'Basilica Cistern',
+  ),
+  Site(
+    id: 'ani',
+    name: L10nText('Ани', 'Ani', 'Ani'),
+    region: L10nText('Карс', 'Kars', 'Kars'),
+    date: L10nText('X в.', 'MS 10. yüzyıl', '10th c. AD'),
+    era: Era.byzantium,
+    unesco: 2016,
+    sortYear: 950,
+    lat: 40.5075,
+    lon: 43.5728,
+    desc: L10nText(
+      'Караванный мегаполис Шёлкового пути на границе миров — «город 1001 церкви». Крепостные стены, собор X века и храмы, застывшие в пустоте степи над ущельем Аракса.',
+      'İpek Yolu\'nun kervan metropolü, iki dünya arasında: «1001 kiliseli kent». Kalesurları, X. yy katedrali ve Aras boğazındaki step boşluğunda donmuş kiliseler.',
+      'A Silk Road metropolis between worlds — «the city of 1001 churches». Fortress-high walls, a 10th-century cathedral and churches frozen in the steppe above the Araxes gorge.',
+    ),
+    pride: L10nText(
+      'Один из крупнейших городов Средневековья: его красные стены видели караваны половины мира.',
+      'Ortaçağ\'ın en büyük kentlerinden biri: kızıl surları dünyanın yarısının kervanlarını gördü.',
+      'One of the great cities of the Middle Ages: its red walls saw the caravans of half the world.',
+    ),
+    legend: L10nText(
+      'Про 1001-ю церковь говорят: её искали веками и не нашли — то ли скрыта в земле, то ли это сам город, ставший храмом. А в туман над ущельем Аракса местные всматриваются, различая в колокольном звоне степи голоса десяти народов, живших здесь бок о бок.',
+      '1001. kiliseyi yüzyıllardır ararlar: ya toprağın altındadır, ya da kentin kendisi o mabettir. Aras boğazındaki siste, burada yan yana yaşamış on halkın sesleri duyulur, derler.',
+      'Of the 1001st church they say it has been sought for centuries and never found — hidden under the earth, or perhaps the city itself is the temple. And in the mist over the Araxes, locals hear the voices of the ten peoples who lived here side by side.',
+    ),
+    gettingThere: L10nText(
+      'Из Карса 45 км на восток (долмуш или такси, ≈1 ч); из Эрзурума 200 км; это погранзона — берите паспорт.',
+      'Kars\'tan 45 km doğuya (dolmuş/taksi, ≈1 saat); Erzurum\'dan 200 km; sınır bölgesi — kimlik/kimlik belgesi gerekir.',
+      '45 km east of Kars (dolmuş/taxi, ≈1 h); 200 km from Erzurum; it is a border zone — carry your passport.',
+    ),
+    wikiRu: 'Ани',
+    wikiEn: 'Ani',
+  ),
+  Site(
+    id: 'sumela',
+    name: L10nText('Монастырь Сумела', 'Sümela Manastırı', 'Sümela Monastery'),
+    region: L10nText('Трабзон (Мачка)', 'Trabzon (Maçka)', 'Trabzon (Maçka)'),
+    date: L10nText('386 г.', 'MS 386', 'AD 386'),
+    era: Era.byzantium,
+    sortYear: 386,
+    lat: 40.7560,
+    lon: 39.6900,
+    desc: L10nText(
+      'Монастырь Богородицы, прилипший к скале на высоте 300 метров в лесах Алтындере. Основан в 386 году, расписан фресками XVIII века; к нему ведёт крутая тропа сквозь туман и буковые леса Трабзона.',
+      'Altındere ormanlarında kayaya 300 metre yükseklikte «yapışmış» Meryem Ana manastırı. 386\'da kuruldu, XVIII. yy freskleriyle bezenmiştir; Trabzon\'un sisli kayın ormanlarından dik bir patika çıkar.',
+      'A monastery of the Mother of God clinging to a cliff 300 metres up in the forests of Altındere. Founded in 386, painted with 18th-century frescoes; a steep trail climbs to it through Trabzon\'s misty beech woods.',
+    ),
+    pride: L10nText(
+      'Святыня, пережившая империи: фрески Сумелы сегодня реставрирует сама Турция — для всех, кто сюда приходит.',
+      'İmparatorlukları aşan kutsal yer: Sümela\'nın fresklerini bugün Türkiye restore ediyor — gelen herkes için.',
+      'A shrine that outlived empires: Türkiye itself now restores Sümela\'s frescoes — for all who come.',
+    ),
+    legend: L10nText(
+      'По преданию, чудотворную икону «Панагия Сумела» написал евангелист Лука, а в пещеру Чёрной горы её принесли ангелы; афинские монахи Варнава и Софроний пришли вслед за ней и основали монастырь.',
+      'Rivayete göre «Panagia Soumela» ikonasını Luka yazdı; Karadağ\'daki mağaraya melekler taşıdı. Atinalı keşişler Barnabas ile Sofronios ikonanın ardından geldi ve manastırı kurdu.',
+      'Tradition holds that the wonder-working icon of «Panagia Soumela» was painted by St Luke and carried to the Black Mountain\'s cave by angels; the Athenian monks Barnabas and Sophronius followed it and founded the monastery.',
+    ),
+    gettingThere: L10nText(
+      'Из Трабзона 45 км на юг до Мачки, затем 7 км вверх по ущелью Алтындере (летом долмуши); вход в национальный парк платный; тропа 15 минут.',
+      'Trabzon\'dan Maçka\'ya 45 km, sonra Altındere vadisinde 7 km (yazın dolmuş); milli park girişi ücretli; 15 dk patika.',
+      '45 km south of Trabzon to Maçka, then 7 km up the Altındere gorge (summer dolmuşes); national park fee; a 15-minute trail climbs to the gate.',
+    ),
+    wikiRu: 'Монастырь Сумела',
+    wikiEn: 'Sümela Monastery',
   ),
   Site(
     id: 'topkapi',
@@ -392,6 +778,8 @@ const List<Site> kSites = [
     era: Era.ottoman,
     unesco: 1985,
     sortYear: 1478,
+    lat: 41.0128,
+    lon: 28.9831,
     desc: L10nText(
       'Четыре двора султанов между Босфором и Золотым Рогом: 400 лет — сердце империи трёх континентов. Алмаз «Ложечника» в 86 карат и кинжал Топкапы.',
       'Boğaz ile Haliç arasındaki dört avlulu sultan sarayı: 400 yıl boyunca üç kıtaya hükmeden imparatorluğun kalbi. 86 kırat Kaşıkçı Elması ve Topkapı Hançeri.',
@@ -401,6 +789,16 @@ const List<Site> kSites = [
       'Из этих стен правили от Венгрии до Алжира — шесть веков подряд.',
       'Bu duvarlardan Macaristan\'dan Cezayir\'e hükmedildi — altı yüzyıl boyunca.',
       'From these walls they ruled from Hungary to Algeria — for six centuries.',
+    ),
+    legend: L10nText(
+      'Алмаз «Ложечника», по базарной байке, нашёл на свалке нищий рыбак и продал за три деревянные ложки — а султан позже выкупил его у перекупщика. У кинжала Топкапы три спрятанных часика в рукояти, и до сих пор спорят, кто его заказывал.',
+      'Söylenceye göre Kaşıkçı Elması\'nı çöp döken bir balıkçı bulmuş, üç tahta kaşığa satmış; sultan ise sarrafdan geri almış. Topkapı Hançeri\'nin sapında üç gizli saat vardır; sipariş sahibi hâlâ tartışmalı.',
+      'The Spoonmaker\'s Diamond, bazaar lore says, was fished from a rubbish heap and sold for three wooden spoons — the sultan later bought it back. The Topkapı Dagger hides three clocks in its hilt; its true patron is still debated.',
+    ),
+    gettingThere: L10nText(
+      'Стамбул, Султанахмет: первый двор — сразу за Айя-Софией; трамвай T1 (Sultanahmet/Gülhane); приходите к открытию — очереди в сокровищницу.',
+      'İstanbul, Sultanahmet: birinci avlu Ayasofya\'nın hemen ardında; T1 (Sultanahmet/Gülhane); hazine için erken gidin.',
+      'Istanbul, Sultanahmet: the first court lies right behind Hagia Sophia; tram T1 (Sultanahmet/Gülhane); come early for the Treasury queues.',
     ),
     wikiRu: 'Дворец Топкапы',
     wikiEn: 'Topkapı Palace',
@@ -413,6 +811,8 @@ const List<Site> kSites = [
     era: Era.ottoman,
     unesco: 2011,
     sortYear: 1575,
+    lat: 41.6781,
+    lon: 26.5594,
     desc: L10nText(
       'Вершина гения Синана: четыре минарета по 71 метру, купол диаметром 31 метр на четырёх колоннах, мрамор и изникская плитка.',
       'Mimar Sinan\'ın zirvesi: 71 metrelik dört minare, dört sütuna oturan 31 metre çapında kubbe, mermer ve İznik çinileri.',
@@ -420,11 +820,53 @@ const List<Site> kSites = [
     ),
     pride: L10nText(
       'Синан построил более 300 сооружений; Селимие он называл шедевром своей зрелости.',
-      'Sinan 300\'den fazla eser verdi; Selimiye\'yi "ustalık eserim" diye andı.',
+      'Sinan 300\'den fazla eser verdi; Selimiye\'yi «ustalık eserim» diye andı.',
       'Sinan created over 300 works; he called Selimiye his masterwork.',
+    ),
+    legend: L10nText(
+      'Синан строил Селимие десятилетия и называл её «шедевром старости»; говорят, он желал превзойти купол Айя-Софии — и достиг своего. А четыре минарета поставлены так хитро, что, с какой стороны ни глянь, видны все четыре.',
+      'Sinan Selimiye\'yi on yıllar boyunca inşa etti ve «ihtiyarlık eserim» dedi; Ayasofya kubbesini geçmek istediği söylenir — ve başarırdı. Dört minare öyle dizilmiştir ki, neresinden bakarsan bak, hepsi görünür derler.',
+      'Sinan built Selimiye over decades and called it the masterpiece of his old age; they say he meant to outdo Hagia Sophia\'s dome — and did. Folklore holds that from whichever side you look, all four minarets come into view.',
+    ),
+    gettingThere: L10nText(
+      'Эдирне, центр города: из Стамбула автобус или авто 2,5 ч по трассе O-3; от автовокзала Эдирне пешком 15 минут.',
+      'Edirne merkez: İstanbul\'dan O-3 üzerinden otobüs/araç 2,5 saat; otogardan 15 dk yürüme.',
+      'Central Edirne: 2.5 h from Istanbul by coach or car via the O-3; a 15-minute walk from the otogar.',
     ),
     wikiRu: 'Мечеть Селимие',
     wikiEn: 'Selimiye Mosque, Edirne',
+  ),
+  Site(
+    id: 'ishak-pasha',
+    name: L10nText('Дворец Ишак-паши', 'İshak Paşa Sarayı', 'İshak Pasha Palace'),
+    region: L10nText('Агры (Догубаязыт)', 'Ağrı (Doğubayazıt)', 'Ağrı (Doğubayazıt)'),
+    date: L10nText('1784 г.', 'MS 1784', 'AD 1784'),
+    era: Era.ottoman,
+    sortYear: 1784,
+    lat: 39.5203,
+    lon: 44.1253,
+    desc: L10nText(
+      'Дворец-крепость на крыше Анатолии, 2 180 метров: 366 комнат, кухня, хаммам, мечеть, библиотека и гарем под одной крышей — в 5 км от горы Арарат.',
+      'Anadolu\'nun çatısında, 2.180 metrede kale-saray: 366 oda, mutfak, hamam, cami, kütüphane ve harem tek çatı altında — Ağrı Dağı\'na 5 km mesafede.',
+      'A palace-fortress on the roof of Anatolia at 2,180 m: 366 rooms, kitchen, hammam, mosque, library and harem under one roof — 5 km from Mount Ararat.',
+    ),
+    pride: L10nText(
+      'Стили от Сельджуков до Османов в одном фасаде: Анатолия — перекрёсток цивилизаций, высеченный в камне.',
+      'Tek cephede Selçuklu\'dan Osmanlı\'ya üsluplar: Anadolu, taşa işlenmiş medeniyetler kavşağı.',
+      'Styles from Seljuk to Ottoman in a single façade: Anatolia as a crossroads of civilisations, carved in stone.',
+    ),
+    legend: L10nText(
+      'Говорят, у Ишак-паши было два сердца и тайный ход из гарема к роднику. А с террасы дворца и сейчас показывают «место ковчега» — снежный силуэт Арарата, где, по Библии и Корану, причалил Ной.',
+      'Derler ki İshak Paşa\'nın iki kalbi vardı ve haremden pınara gizli bir yol inerdi. Terastan hâlâ «geminin yeri» gösterilir: Nuh\'un gemisinin demir attığı söylenen Ağrı\'nın karlı silueti.',
+      'They say İshak Pasha had two hearts and a secret stair from the harem to the spring. From the terrace guides still point out «the ark\'s place» — the snowy silhouette of Ararat where Noah, by Bible and Qur\'an alike, made landfall.',
+    ),
+    gettingThere: L10nText(
+      'Из Агры 90 км до Догубаязыта (автобус, ≈2 ч), оттуда 6 км такси или долмушем; рядом — восхождения на Арарат и «место ковчега».',
+      'Ağrı\'dan Doğubayazıt\'a 90 km (otobüs, ≈2 saat), sonra 6 km taksi/dolmuş; yakınlarda Ağrı tırmanışları ve «geminin yeri».',
+      '90 km from Ağrı to Doğubayazıt (coach, ≈2 h), then 6 km by taxi or dolmuş; Ararat climbs and «the ark\'s site» lie nearby.',
+    ),
+    wikiRu: 'Дворец Ишак-паши',
+    wikiEn: 'Ishak Pasha Palace',
   ),
   Site(
     id: 'dolmabahce',
@@ -433,6 +875,8 @@ const List<Site> kSites = [
     date: L10nText('1856 г.', 'MS 1856', 'AD 1856'),
     era: Era.ottoman,
     sortYear: 1856,
+    lat: 41.0394,
+    lon: 29.0017,
     desc: L10nText(
       '285 комнат, 43 зала, самая большая в мире хрустальная люстра и хрустальная лестница. Здесь часы остановились на 09:05 — часе смерти Ататюрка.',
       '285 oda, 43 salon, dünyanın en büyük kristal avizesi ve kristal merdiven. 10 Kasım 1938\'de, Atatürk\'ün vefat saatinde buradaki saatler 09.05\'te durdu.',
@@ -442,6 +886,16 @@ const List<Site> kSites = [
       'Место, где сама история Республики остановила часы.',
       'Cumhuriyet tarihinin saatlerini durdurduğu yer.',
       'The place where the Republic\'s history stopped the clocks.',
+    ),
+    legend: L10nText(
+      'Самую большую в мире хрустальную люстру — 4,5 тонны, 750 ламп — везли из Англии морем; говорят, султан Абдулмеджид заказал её, желая затмить все дворы Европы. А в комнате, где скончался Ататюрк, все часы стоят на 09:05 — уже более 85 лет.',
+      'Dünyanın en büyük kristal avizesi — 4,5 ton, 750 lamba — deniz yoluyla İngiltere\'den geldi; Sultan Abdülmecid\'in Avrupa saraylarını gölgede bırakma arzusunun hediyesi denebilir. Atatürk\'ün vefat ettiği odada bütün saatler 09.05\'te durur — 85 yıldır.',
+      'The world\'s largest crystal chandelier — 4.5 tonnes, 750 lamps — came by sea from England, ordered, they say, to eclipse every court in Europe. In the room where Atatürk died, every clock stands stopped at 09:05 — as it has for over 85 years.',
+    ),
+    gettingThere: L10nText(
+      'Стамбул, Бешикташ: трамвай T1 до Kabataş, далее 5 минут пешком; паромы до Бешикташа; аэропорт SAW 40 мин на авто.',
+      'İstanbul, Beşiktaş: T1 ile Kabataş, sonra 5 dk yürüme; Beşiktaş vapurları; SAW havalimanı 40 dk.',
+      'Istanbul, Beşiktaş: tram T1 to Kabataş, then a 5-minute walk; Beşiktaş ferries; SAW airport 40 min by car.',
     ),
     wikiRu: 'Дворец Долмабахче',
     wikiEn: 'Dolmabahçe Palace',
@@ -454,6 +908,8 @@ const List<Site> kSites = [
     era: Era.republic,
     featured: true,
     sortYear: 1953,
+    lat: 39.9250,
+    lon: 32.8361,
     desc: L10nText(
       'Мавзолей Ататюрка: 52-метровая колоннада, «Дорога львов» из 24 каменных львов в хеттском стиле, музей Войны за независимость. Каждое 10 ноября в 09:05 страна замирает.',
       'Atatürk\'ün mozolesi: 52 metrelik sütunlar, Hitit tarzında 24 taş aslanlı Aslanlı Yol, Kurtuluş Savaşı Müzesi. Her 10 Kasım saat 09.05\'te ülke bir dakika sessizliğe gömülür.',
@@ -463,6 +919,16 @@ const List<Site> kSites = [
       'Хеттские львы и современный модернизм в одном монументе — 10 000 лет истории в камне.',
       'Hitit aslanları ve modern mimari tek abidede — taşta 10.000 yıllık tarih.',
       'Hittite lions and modern architecture in one monument — 10,000 years of history in stone.',
+    ),
+    legend: L10nText(
+      'Двадцать четыре льва «Дороги львов» высечены в хеттском стиле — как стражи, что охраняли ворота Хаттусы за три тысячи лет до этого. Городская молва добавляет своё: 10 ноября в 09:05 над Анкарой собираются стаи птиц.',
+      'Aslanlı Yol\'un 24 aslanı, üç bin yıl önce Hattuşa\'nın kapılarını bekleyen bekçiler gibi, Hitit üslubunda yontuldu. Şehir efsanesi şunu ekler: 10 Kasım saat 09.05\'te Ankara\'nın üzerinde kuş sürüleri toplanır.',
+      'The 24 lions of the Road of Lions are carved in Hittite style — like the sentinels who guarded Hattusa\'s gates three thousand years earlier. Urban legend adds its own verse: on 10 November at 09:05, flocks of birds gather over Ankara.',
+    ),
+    gettingThere: L10nText(
+      'Анкара, район Аныттепе: станция метро Anıtkabir; из аэропорта Эсенбога 30 км (шаттл Havaş); вход свободный.',
+      'Ankara, Anıttepe: Ankaray/Anıtkabir durağı; Esenboğa havalimanı 30 km (Havaş); giriş ücretsiz.',
+      'Ankara, Anıttepe: Ankaray metro, Anıtkabir stop; Esenboğa airport 30 km (Havaş shuttle); admission free.',
     ),
     wikiRu: 'Аныткабир',
     wikiEn: 'Anıtkabir',
@@ -474,6 +940,7 @@ const List<TimelineEntry> kTimeline = [
   TimelineEntry(-7100, L10nText('Чатал-Хююк — рождение города', 'Çatalhöyük — kentin doğuşu', 'Çatalhöyük — the birth of the city')),
   TimelineEntry(-1650, L10nText('Хетты — Хаттуса', 'Hititler — Hattuşa', 'The Hittites — Hattusa')),
   TimelineEntry(-1250, L10nText('Троянская война', 'Truva Savaşı', 'The Trojan War')),
+  TimelineEntry(-600, L10nText('Первая монета — Сарды', 'İlk sikke — Sardes', 'The first coin — Sardis')),
   TimelineEntry(-550, L10nText('Ликийский союз — ранняя демократия', 'Likya Birliği — erken demokrasi', 'The Lycian League — early democracy')),
   TimelineEntry(537, L10nText('Айя-София', 'Ayasofya', 'Hagia Sophia')),
   TimelineEntry(1071, L10nText('Манцикерт — сельджуки в Анатолии', 'Malazgirt — Anadolu\'da Selçuklular', 'Manzikert — the Seljuks in Anatolia')),

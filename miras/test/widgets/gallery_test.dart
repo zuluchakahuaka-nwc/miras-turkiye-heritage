@@ -58,7 +58,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Гёбекли-Тепе'), findsOneWidget);
-    expect(find.text('Эфес'), findsOneWidget);
+    expect(find.text('Троя'), findsOneWidget);
   });
 
   testWidgets('gibberish query shows empty state', (tester) async {

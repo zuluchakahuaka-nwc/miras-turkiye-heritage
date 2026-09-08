@@ -17,6 +17,8 @@ function Log($msg) {
 Add-Type -AssemblyName System.Drawing
 $adb = 'D:\Android\Sdk\platform-tools\adb.exe'
 $apk = Join-Path $root 'miras\build\app\outputs\flutter-apk\app-debug.apk'
+$exitCode = 0
+$env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'User') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 
 function Convert-DownscalePng($src, $dst, $maxSide = 1400) {
     $img = [System.Drawing.Image]::FromFile($src)
@@ -39,49 +41,6 @@ function Convert-DownscalePng($src, $dst, $maxSide = 1400) {
     }
 }
 
-function Get-UiaNode($pattern) {
-    $shell = & $adb shell uiautomator dump /sdcard/miras_dump.xml 2>&1 | Out-String
-    $null = & $adb pull /sdcard/miras_dump.xml (Join-Path $smokeDir 'dump.xml') 2>&1
-    $raw = Get-Content (Join-Path $smokeDir 'dump.xml') -Raw
-    $doc = New-Object System.Xml.XmlDocument
-    $doc.LoadXml($raw)
-    foreach ($node in $doc.SelectNodes('//node')) {
-        $txt = [string]$node.GetAttribute('text')
-        $desc = [string]$node.GetAttribute('content-desc')
-        if ($txt -match $pattern -or $desc -match $pattern) {
-            return [string]$node.GetAttribute('bounds')
-        }
-    }
-    return $null
-}
-
-function Tap-ByPattern($pattern) {
-    $bounds = Get-UiaNode $pattern
-    if (-not $bounds) {
-        Log "    uiautomator: no node matching '$pattern'"
-        return $false
-    }
-    if ($bounds -match '\[(\d+),(\d+)\]\[(\d+),(\d+)\]') {
-        $cx = ([int]$Matches[1] + [int]$Matches[3]) / 2
-        $cy = ([int]$Matches[2] + [int]$Matches[4]) / 2
-        $null = & $adb shell input tap ([int]$cx) ([int]$cy)
-        Log "    tap '$pattern' at $([int]$cx),$([int]$cy)"
-        return $true
-    }
-    return $false
-}
-
-function Take-Screenshot($name) {
-    $null = & $adb shell screencap -p /sdcard/miras_$name.png
-    $null = & $adb pull /sdcard/miras_$name.png (Join-Path $smokeDir "$name.png") 2>&1
-    if (Test-Path (Join-Path $smokeDir "$name.png")) {
-        Log "    screenshot $name.png saved"
-        return $true
-    }
-    Log "    screenshot $name FAILED"
-    return $false
-}
-
 function Parse-Verdict($output) {
     if ($output -match '(?m)^Error:' -or $output -match 'File not found') { return 'ERROR' }
     $lines = @($output -split "`r?`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
@@ -97,53 +56,104 @@ function Parse-Verdict($output) {
     return 'EMPTY'
 }
 
-$env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'User') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
+function Shot($name) {
+    $null = & $adb shell screencap -p /sdcard/m_$name.png
+    $null = & $adb pull /sdcard/m_$name.png (Join-Path $smokeDir "$name.png") 2>&1
+    if (Test-Path (Join-Path $smokeDir "$name.png")) {
+        Log "    screenshot $name"
+        return $true
+    }
+    Log "    screenshot $name FAILED"
+    return $false
+}
 
-Log '=== device_smoke start ==='
-$exitCode = 0
+function Vision-Check($name, $expectation) {
+    $png = Join-Path $smokeDir "$name.png"
+    if (-not (Test-Path $png)) { Log "[$name] missing"; if ($script:exitCode -eq 0) { $script:exitCode = 2 }; return }
+    $small = Join-Path $smokeDir "${name}_vision.png"
+    Convert-DownscalePng $png $small
+    $jsonPath = $small.Replace('\', '/')
+    $prompt = "Скриншот приложения MIRAS. Ожидание: $expectation. Начни ответ строго с YES (соответствует и вёрстка целая) или NO (не то или поломано), затем одна строка."
+    $json = '{"image_source":"' + $jsonPath + '","prompt":"' + ($prompt -replace '"', '') + '"}'
+    $job = Start-Job -ScriptBlock {
+        param($j)
+        mcp-cli call zai-vision analyze_image $j 2>&1 | Out-String
+    } -ArgumentList $json
+    if (Wait-Job $job -Timeout $CallTimeoutSec) {
+        $out = Receive-Job $job | Out-String
+        Remove-Job $job -Force
+        $v = Parse-Verdict $out
+        Log "[$name] vision: $v"
+        if ($v -notlike 'YES*') { if ($script:exitCode -eq 0) { $script:exitCode = 2 } }
+    }
+    else {
+        Stop-Job $job -Force
+        Remove-Job $job -Force
+        Get-Process -Name mcp-cli -ErrorAction SilentlyContinue | Stop-Process -Force
+        Log "[$name] vision TIMEOUT"
+        if ($script:exitCode -eq 0) { $script:exitCode = 2 }
+    }
+    Start-Sleep -Seconds 1
+}
+
+Log '=== device_smoke (coords mode) start ==='
 
 $devices = (& $adb devices) -join ' '
 if ($devices -notmatch '\bdevice\b') {
-    Log "FATAL: no adb device: $devices"
+    Log "FATAL: no adb device"
     exit 4
 }
-Log "device ok: $((($devices -split "`n") | Where-Object { $_ -match 'device' }) -join '; ')"
 
-if (-not (Test-Path $apk)) {
-    Log "FATAL: apk not found: $apk"
-    exit 4
+$wake = (& $adb shell dumpsys power) | Select-String 'mWakefulness=' | Select-Object -First 1
+if ($wake -match 'Asleep') {
+    Log 'device asleep, waking'
+    & $adb shell input keyevent 224
+    Start-Sleep -Seconds 2
+    & $adb shell input swipe 720 2800 720 800 300
+    Start-Sleep -Seconds 2
 }
+$null = & $adb shell svc power stayon usb
+Start-Sleep -Seconds 1
+& $adb shell am force-stop tr.miras.app 2>&1 | Out-Null
 
 Log 'installing apk...'
 & $adb install -r $apk 2>&1 | ForEach-Object { Log "    $_" }
 $null = & $adb logcat -c
 Log 'launching app...'
 $null = & $adb shell am start -n tr.miras.app/tr.miras.miras.MainActivity
-Start-Sleep -Seconds 6
-$null = Take-Screenshot '01_home_ru'
+Start-Sleep -Seconds 7
+$null = Shot '01_home_ru'
 
-Log 'navigate: open gallery'
-$okTap = Tap-ByPattern 'Смотреть галерею|Galeriye git|Open the gallery'
+Log 'nav: open gallery (tap CTA 720,1440)'
+& $adb shell input tap 720 1440
 Start-Sleep -Seconds 3
-$null = Take-Screenshot '02_gallery'
+$null = Shot '02_gallery'
 
-Log 'navigate: open Side detail'
-$okTap = Tap-ByPattern '^Сиде$|^Side$'
-Start-Sleep -Seconds 3
-$null = Take-Screenshot '03_detail_side'
-
-Log 'navigate: back to home'
-$null = & $adb shell input keyevent 4
+Log 'nav: search Side (tap 720,460, type)'
+& $adb shell input tap 720 460
 Start-Sleep -Seconds 1
-$null = & $adb shell input keyevent 4
+& $adb shell input text "Side"
+Start-Sleep -Seconds 2
+$null = Shot '03_search_side'
+
+Log 'nav: open card (tap 380,1150)'
+& $adb shell input tap 380 1150
+Start-Sleep -Seconds 3
+$null = Shot '04_detail_side'
+
+Log 'nav: back x2'
+& $adb shell input keyevent 4
+Start-Sleep -Seconds 1
+& $adb shell input keyevent 4
 Start-Sleep -Seconds 2
 
-Log 'navigate: switch language to English'
-$okTap = Tap-ByPattern 'Язык|Dil|Language'
+Log 'nav: language menu (tap 1325,160), pick English (tap 1286,736)'
+& $adb shell input tap 1325 160
 Start-Sleep -Seconds 2
-$okTap = Tap-ByPattern '^English$'
+$null = Shot '05_lang_menu'
+& $adb shell input tap 1286 736
 Start-Sleep -Seconds 2
-$null = Take-Screenshot '04_home_en'
+$null = Shot '06_home_en'
 
 Log 'collecting logcat...'
 $mirasLines = (& $adb logcat -d) | Where-Object { $_ -match 'MIRAS' } | Select-Object -First 20
@@ -160,39 +170,12 @@ else {
     Log '    no crashes in logcat'
 }
 
-Log 'vision check of screenshots...'
-$shots = @('01_home_ru', '02_gallery', '03_detail_side', '04_home_en')
-foreach ($name in $shots) {
-    $png = Join-Path $smokeDir "$name.png"
-    if (-not (Test-Path $png)) {
-        Log "[$name] missing screenshot"
-        if ($exitCode -eq 0) { $exitCode = 2 }
-        continue
-    }
-    $small = Join-Path $smokeDir "${name}_vision.png"
-    Convert-DownscalePng $png $small
-    $jsonPath = $small.Replace('\', '/')
-    $json = '{"image_source":"' + $jsonPath + '","prompt":"Это скриншот мобильного приложения-гида. Проверь: заголовки и текст читаемы, вёрстка не поломана (нет наложений, обрезанного текста, пустых серых зон, сообщений об ошибках). Начни ответ строго с YES (всё хорошо) или NO (есть дефекты), затем кратко что видно на экране."}'
-    $job = Start-Job -ScriptBlock {
-        param($j)
-        mcp-cli call zai-vision analyze_image $j 2>&1 | Out-String
-    } -ArgumentList $json
-    if (Wait-Job $job -Timeout $CallTimeoutSec) {
-        $out = Receive-Job $job | Out-String
-        Remove-Job $job -Force
-        $verdict = Parse-Verdict $out
-        Log "[$name] vision: $verdict"
-        if ($verdict -notlike 'YES*') { if ($exitCode -eq 0) { $exitCode = 2 } }
-    }
-    else {
-        Stop-Job $job -Force
-        Remove-Job $job -Force
-        Get-Process -Name mcp-cli -ErrorAction SilentlyContinue | Stop-Process -Force
-        Log "[$name] vision TIMEOUT (${CallTimeoutSec}s)"
-        if ($exitCode -eq 0) { $exitCode = 2 }
-    }
-    Start-Sleep -Seconds 1
-}
+Log 'vision checks...'
+Vision-Check '01_home_ru' 'главный экран на русском: заголовок «Колыбель цивилизаций», золотая кнопка «Смотреть галерею», тёмно-бирюзовый фон с орнаментом'
+Vision-Check '02_gallery' 'галерея с карточками достопримечательностей: фото, названия, поисковая строка и фильтры эпох'
+Vision-Check '04_detail_side' 'экран объекта Сиде: заголовок Сиде, блоки «Легенды и мифы» и «Как добраться», координаты'
+Vision-Check '06_home_en' 'главный экран на английском: Cradle of civilisations, кнопка Open the gallery'
+Vision-Check '05_lang_menu' 'открытое меню выбора языка с пунктами Русский, Türkçe, English'
 
 Log "=== device_smoke done, exit=$exitCode ==="
 exit $exitCode
