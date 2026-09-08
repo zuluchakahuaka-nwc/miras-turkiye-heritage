@@ -61,6 +61,7 @@ void main() {
     });
 
     test('every site has a route from a nearest base city', () {
+      final cityNames = kTurkeyCities.map((c) => c.name).toSet();
       for (final s in kSites) {
         final routes = kSiteRoutes[s.id];
         expect(routes, isNotNull, reason: '${s.id} has no route');
@@ -69,6 +70,14 @@ void main() {
           expect(r.from, isNotEmpty);
           expect(r.km, greaterThan(0), reason: '${s.id}/${r.from}');
           expect(r.points.length, greaterThanOrEqualTo(2), reason: '${s.id}/${r.from}');
+          expect(cityNames.contains(r.from), isTrue,
+              reason: '${s.id}: route base "${r.from}" is not a labeled city');
+          final city = kTurkeyCities.firstWhere((c) => c.name == r.from);
+          final start =
+              TurkeyGeometry.project(r.points.first[1], r.points.first[0]);
+          final cp = TurkeyGeometry.project(city.lat, city.lon);
+          expect((start - cp).distance, lessThan(4),
+              reason: '${s.id} route must start exactly at ${r.from}');
           for (final pt in r.points) {
             final p = TurkeyGeometry.project(pt[1], pt[0]);
             expect(p.dx, inInclusiveRange(0, kMapBaseWidth), reason: '${s.id}/${r.from}');
