@@ -163,6 +163,62 @@ void drawDashedPath(Canvas canvas, Path path, Paint paint) {
   }
 }
 
+TextPainter mapLabel(String text, double size, Color color) {
+  return TextPainter(
+    text: TextSpan(
+      text: text,
+      style: TextStyle(
+        fontFamily: 'Manrope',
+        fontWeight: FontWeight.w700,
+        fontSize: size,
+        color: color,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+}
+
+void mapPill(Canvas canvas, Offset at, Size size, Color color) {
+  canvas.drawRRect(
+    RRect.fromRectAndRadius(at & size, const Radius.circular(4)),
+    Paint()..color = color,
+  );
+}
+
+class CitiesPainter extends CustomPainter {
+  final Color city;
+
+  CitiesPainter({this.city = const Color(0xFF0E2A2B)});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cityDot = Paint()..color = city;
+    final ring = Paint()..color = Colors.white;
+    for (final c in kTurkeyCities) {
+      final p = TurkeyGeometry.project(c.lat, c.lon);
+      canvas.drawCircle(p, 6.0, ring);
+      canvas.drawCircle(p, 4.4, cityDot);
+      final tp = mapLabel(c.name, 13.5, city);
+      Offset at;
+      switch (c.side) {
+        case 'w':
+          at = Offset(p.dx - tp.width - 10, p.dy - tp.height / 2);
+        case 'n':
+          at = Offset(p.dx - tp.width / 2, p.dy - tp.height - 10);
+        case 's':
+          at = Offset(p.dx - tp.width / 2, p.dy + 10);
+        default:
+          at = Offset(p.dx + 10, p.dy - tp.height / 2);
+      }
+      mapPill(canvas, at + const Offset(-3, -1), Size(tp.width + 6, tp.height + 2), const Color(0xCCFFFFFF));
+      tp.paint(canvas, at + const Offset(0, 1));
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CitiesPainter oldDelegate) => oldDelegate.city != city;
+}
+
 class SiteRoutesPainter extends CustomPainter {
   final List<TurkeyRoute> routes;
   final Color color;
@@ -249,38 +305,13 @@ class TurkeyMapPainter extends CustomPainter {
   final Color border;
   final Color sea;
   final Color road;
-  final Color city;
 
   TurkeyMapPainter({
     this.land = const Color(0xFFF7F2E5),
     this.border = const Color(0xFF14636B),
     this.sea = const Color(0xFFE8F2EE),
     this.road = const Color(0xFF8D7B5A),
-    this.city = const Color(0xFF0E2A2B),
   });
-
-  TextPainter _label(String text, double size, Color color) {
-    final tp = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          fontFamily: 'Manrope',
-          fontWeight: FontWeight.w700,
-          fontSize: size,
-          color: color,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    return tp;
-  }
-
-  void _pill(Canvas canvas, Offset at, Size size, Color color) {
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(at & size, const Radius.circular(4)),
-      Paint()..color = color,
-    );
-  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -315,31 +346,9 @@ class TurkeyMapPainter extends CustomPainter {
       }
       drawDashedPath(canvas, rp, roadPaint);
       final lp = TurkeyGeometry.project(r.labelAt[1], r.labelAt[0]);
-      final tp = _label(r.name, 12, const Color(0xFF6B5D3F));
-      _pill(canvas, lp + Offset(-2, -tp.height / 2 - 1), Size(tp.width + 6, tp.height + 2), const Color(0xCCFFFFFF));
+      final tp = mapLabel(r.name, 12, const Color(0xFF6B5D3F));
+      mapPill(canvas, lp + Offset(-2, -tp.height / 2 - 1), Size(tp.width + 6, tp.height + 2), const Color(0xCCFFFFFF));
       tp.paint(canvas, lp + Offset(1, -tp.height / 2));
-    }
-
-    final cityDot = Paint()..color = city;
-    final ring = Paint()..color = Colors.white;
-    for (final c in kTurkeyCities) {
-      final p = TurkeyGeometry.project(c.lat, c.lon);
-      canvas.drawCircle(p, 4.6, ring);
-      canvas.drawCircle(p, 3.4, cityDot);
-      final tp = _label(c.name, 12.5, city);
-      Offset at;
-      switch (c.side) {
-        case 'w':
-          at = Offset(p.dx - tp.width - 10, p.dy - tp.height / 2);
-        case 'n':
-          at = Offset(p.dx - tp.width / 2, p.dy - tp.height - 9);
-        case 's':
-          at = Offset(p.dx - tp.width / 2, p.dy + 9);
-        default:
-          at = Offset(p.dx + 10, p.dy - tp.height / 2);
-      }
-      _pill(canvas, at + const Offset(-3, -1), Size(tp.width + 6, tp.height + 2), const Color(0xB3FFFFFF));
-      tp.paint(canvas, at);
     }
   }
 
@@ -348,6 +357,5 @@ class TurkeyMapPainter extends CustomPainter {
       oldDelegate.land != land ||
       oldDelegate.border != border ||
       oldDelegate.sea != sea ||
-      oldDelegate.road != road ||
-      oldDelegate.city != city;
+      oldDelegate.road != road;
 }

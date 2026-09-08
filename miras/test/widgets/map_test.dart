@@ -112,6 +112,7 @@ void main() {
 
     testWidgets('shows every site marker', (tester) async {
       await pumpMap(tester, AppLang.ru);
+      expect(find.byKey(const Key('map.cities')), findsOneWidget);
       for (final s in kSites) {
         expect(find.byKey(Key('map.marker.${s.id}')), findsOneWidget,
             reason: 'missing marker for ${s.id}');

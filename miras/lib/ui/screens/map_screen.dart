@@ -233,6 +233,12 @@ class _MapScreenState extends State<MapScreen> {
                                     SiteRoutesPainter(kSiteRoutes[_selectedSite!.id]!),
                               ),
                             ),
+                          Positioned.fill(
+                            child: CustomPaint(
+                              key: const Key('map.cities'),
+                              painter: CitiesPainter(),
+                            ),
+                          ),
                           for (final site in kSites)
                             _MapMarker(
                               site: site,
