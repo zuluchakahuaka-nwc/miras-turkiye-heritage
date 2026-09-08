@@ -9,6 +9,7 @@ import '../../l10n/strings.dart';
 import '../widgets/ornaments.dart';
 import 'detail_screen.dart';
 import 'gallery_screen.dart';
+import 'map_screen.dart';
 import 'sources_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -77,6 +78,15 @@ class _HomeView extends StatelessWidget {
           ),
         ),
         actions: [
+          IconButton(
+            tooltip: t(lang, 'action.map'),
+            key: const Key('home.map.button'),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => MapScreen(lang: lang)),
+            ),
+            icon: const Icon(Icons.map_outlined),
+          ),
           IconButton(
             tooltip: t(lang, 'action.sources'),
             onPressed: () => _openSources(context),

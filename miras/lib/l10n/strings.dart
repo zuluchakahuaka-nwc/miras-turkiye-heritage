@@ -85,6 +85,56 @@ const Map<String, Map<AppLang, String>> kStrings = {
     AppLang.tr: 'Dil',
     AppLang.en: 'Language',
   },
+  'action.map': {
+    AppLang.ru: 'Карта',
+    AppLang.tr: 'Harita',
+    AppLang.en: 'Map',
+  },
+  'section.map': {
+    AppLang.ru: 'Карта Турции',
+    AppLang.tr: 'Türkiye haritası',
+    AppLang.en: 'Map of Türkiye',
+  },
+  'map.hint': {
+    AppLang.ru: 'Нажмите на маркер — появится название; ещё раз — откроется раздел. Карта масштабируется щипком',
+    AppLang.tr: 'İşaretçiye dokunun — adı görünür; tekrar dokunun — sayfası açılır. Haritayı yakınlaştırın',
+    AppLang.en: 'Tap a marker to see its name, tap again to open the page. Pinch to zoom',
+  },
+  'music.title': {
+    AppLang.ru: 'Музыка эпохи',
+    AppLang.tr: 'Dönem müziği',
+    AppLang.en: 'Music of the era',
+  },
+  'music.load': {
+    AppLang.ru: 'Загрузить MP3',
+    AppLang.tr: 'MP3 yükle',
+    AppLang.en: 'Load MP3',
+  },
+  'music.hint': {
+    AppLang.ru: 'Выберите MP3 — он сохранится в приложении и будет играть во всех разделах этой эпохи.',
+    AppLang.tr: 'Bir MP3 seçin — uygulamada saklanır ve bu dönemin tüm sayfalarında çalar.',
+    AppLang.en: 'Pick an MP3 — it is stored in the app and plays on every page of this era.',
+  },
+  'music.loaded': {
+    AppLang.ru: 'Мелодия сохранена',
+    AppLang.tr: 'Melodi kaydedildi',
+    AppLang.en: 'Melody saved',
+  },
+  'music.loadFailed': {
+    AppLang.ru: 'Не удалось загрузить мелодию',
+    AppLang.tr: 'Melodi yüklenemedi',
+    AppLang.en: 'Failed to load the melody',
+  },
+  'music.playing': {
+    AppLang.ru: 'Играет',
+    AppLang.tr: 'Çalıyor',
+    AppLang.en: 'Playing',
+  },
+  'music.paused': {
+    AppLang.ru: 'Пауза',
+    AppLang.tr: 'Duraklatıldı',
+    AppLang.en: 'Paused',
+  },
   'section.pride': {
     AppLang.ru: 'Гордость нации',
     AppLang.tr: 'Ulusal gurur',

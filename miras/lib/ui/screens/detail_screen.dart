@@ -1,16 +1,58 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/era_music.dart';
 import '../../core/theme.dart';
 import '../../data/sites.dart';
 import '../../l10n/strings.dart';
 import '../widgets/ornaments.dart';
 import 'sources_screen.dart';
 
-class SiteDetailScreen extends StatelessWidget {
+Future<String?> defaultPickMp3() async {
+  final res = await FilePicker.platform.pickFiles(type: FileType.audio);
+  return res?.files.single.path;
+}
+
+class SiteDetailScreen extends StatefulWidget {
   final Site site;
   final AppLang lang;
+  final EraMusicStore? musicStore;
+  final Mp3Picker? mp3Picker;
 
-  const SiteDetailScreen({super.key, required this.site, required this.lang});
+  const SiteDetailScreen({
+    super.key,
+    required this.site,
+    required this.lang,
+    this.musicStore,
+    this.mp3Picker,
+  });
+
+  @override
+  State<SiteDetailScreen> createState() => _SiteDetailScreenState();
+}
+
+class _SiteDetailScreenState extends State<SiteDetailScreen> {
+  late final EraMusicStore _store;
+
+  @override
+  void initState() {
+    super.initState();
+    _store = widget.musicStore ?? EraMusicStore.instance;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_store.has(widget.site.era)) {
+        EraMusicController.play(_store.fileFor(widget.site.era).path);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    EraMusicController.stop();
+    super.dispose();
+  }
+
+  Site get site => widget.site;
+  AppLang get lang => widget.lang;
 
   Widget _fact(IconData icon, String label, String value) {
     return ConstrainedBox(
@@ -218,6 +260,13 @@ class SiteDetailScreen extends StatelessWidget {
                   t(lang, 'detail.coords'),
                   formatCoords(site.lat, site.lon),
                 ),
+                const SizedBox(height: 14),
+                _MusicSection(
+                  site: site,
+                  lang: lang,
+                  store: _store,
+                  picker: widget.mp3Picker ?? defaultPickMp3,
+                ),
                 const SizedBox(height: 20),
                 OutlinedButton.icon(
                   onPressed: () => Navigator.push(
@@ -228,6 +277,159 @@ class SiteDetailScreen extends StatelessWidget {
                   label: Text(t(lang, 'action.sources')),
                 ),
               ]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MusicSection extends StatefulWidget {
+  final Site site;
+  final AppLang lang;
+  final EraMusicStore store;
+  final Mp3Picker picker;
+
+  const _MusicSection({
+    required this.site,
+    required this.lang,
+    required this.store,
+    required this.picker,
+  });
+
+  @override
+  State<_MusicSection> createState() => _MusicSectionState();
+}
+
+class _MusicSectionState extends State<_MusicSection> {
+  bool _playing = false;
+  bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _playing = EraMusicController.current.value ==
+        widget.store.fileFor(widget.site.era).path;
+  }
+
+  Future<void> _load() async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      final picked = await widget.picker();
+      if (picked == null) return;
+      final ok = await widget.store.import(widget.site.era, picked);
+      if (!mounted) return;
+      if (ok) {
+        await EraMusicController.play(widget.store.fileFor(widget.site.era).path);
+        setState(() => _playing = true);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(t(widget.lang, 'music.loaded'))),
+          );
+        }
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(t(widget.lang, 'music.loadFailed'))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _toggle() async {
+    if (_playing) {
+      await EraMusicController.stop();
+      setState(() => _playing = false);
+    } else {
+      await EraMusicController.play(widget.store.fileFor(widget.site.era).path);
+      setState(() => _playing = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final has = widget.store.has(widget.site.era);
+    return Container(
+      key: const Key('detail.music'),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0EBDA),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: MirasColors.gold, width: 1.2),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.music_note, size: 26, color: MirasColors.teal),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  t(widget.lang, 'music.title'),
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 11.5,
+                    letterSpacing: 1.4,
+                    color: MirasColors.terracotta,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                if (has)
+                  Row(
+                    children: [
+                      IconButton(
+                        key: const Key('detail.music.toggle'),
+                        onPressed: _toggle,
+                        icon: Icon(
+                          _playing ? Icons.pause_circle : Icons.play_circle,
+                          size: 30,
+                          color: MirasColors.teal,
+                        ),
+                      ),
+                      Text(
+                        _playing
+                            ? t(widget.lang, 'music.playing')
+                            : t(widget.lang, 'music.paused'),
+                        style: const TextStyle(
+                          fontFamily: 'Manrope',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                          color: MirasColors.ink,
+                        ),
+                      ),
+                    ],
+                  )
+                else ...[
+                  Text(
+                    t(widget.lang, 'music.hint'),
+                    style: const TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 12.5,
+                      height: 1.5,
+                      color: MirasColors.bodyText,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton.icon(
+                    key: const Key('detail.music.load'),
+                    onPressed: _busy ? null : _load,
+                    icon: _busy
+                        ? const SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.upload_file, size: 18),
+                    label: Text(t(widget.lang, 'music.load')),
+                  ),
+                ],
+              ],
             ),
           ),
         ],

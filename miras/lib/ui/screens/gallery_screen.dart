@@ -7,6 +7,7 @@ import '../../l10n/strings.dart';
 import '../../logic/site_filter.dart';
 import '../widgets/site_card.dart';
 import 'detail_screen.dart';
+import 'map_screen.dart';
 
 class GalleryScreen extends StatefulWidget {
   final AppLang lang;
@@ -43,6 +44,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return Scaffold(
       backgroundColor: MirasColors.paper,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            tooltip: t(lang, 'action.map'),
+            key: const Key('gallery.map.button'),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => MapScreen(lang: lang)),
+            ),
+            icon: const Icon(Icons.map_outlined),
+          ),
+        ],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
