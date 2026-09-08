@@ -214,6 +214,15 @@ class _MapScreenState extends State<MapScreen> {
                           Positioned.fill(
                             child: CustomPaint(painter: TurkeyMapPainter()),
                           ),
+                          Positioned.fill(
+                            child: CustomPaint(
+                              key: const Key('map.routes.all'),
+                              painter: SiteRoutesPainter(
+                                kSiteRoutes.values.expand((r) => r).toList(),
+                                faint: true,
+                              ),
+                            ),
+                          ),
                           if (_selectedSite != null &&
                               (kSiteRoutes[_selectedSite!.id]?.isNotEmpty ??
                                   false))

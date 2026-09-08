@@ -67,6 +67,7 @@ void main() {
         expect(routes!.isNotEmpty, isTrue, reason: '${s.id} empty routes');
         for (final r in routes) {
           expect(r.from, isNotEmpty);
+          expect(r.km, greaterThan(0), reason: '${s.id}/${r.from}');
           expect(r.points.length, greaterThanOrEqualTo(2), reason: '${s.id}/${r.from}');
           for (final pt in r.points) {
             final p = TurkeyGeometry.project(pt[1], pt[0]);
@@ -166,6 +167,18 @@ void main() {
       await tester.tap(find.byKey(const Key('map.names.toggle')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('map.name.troy')), findsNothing);
+    });
+
+    testWidgets('all routes layer is always visible without selection', (tester) async {
+      await pumpMap(tester, AppLang.ru);
+
+      expect(find.byKey(const Key('map.routes.all')), findsOneWidget);
+      expect(find.byKey(const Key('map.route.troy')), findsNothing);
+
+      await tester.tap(find.byKey(const Key('map.marker.troy')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('map.route.troy')), findsOneWidget);
+      expect(find.byKey(const Key('map.label.troy')), findsOneWidget);
     });
 
     testWidgets('selecting a site draws its route layer', (tester) async {

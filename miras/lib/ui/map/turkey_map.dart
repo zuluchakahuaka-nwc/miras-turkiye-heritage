@@ -106,41 +106,42 @@ const List<TurkeyRoad> kTurkeyRoads = [
 
 class TurkeyRoute {
   final String from;
+  final int km;
   final List<List<double>> points;
 
-  const TurkeyRoute(this.from, this.points);
+  const TurkeyRoute(this.from, this.km, this.points);
 }
 
 const Map<String, List<TurkeyRoute>> kSiteRoutes = {
-  'gobekli-tepe': [TurkeyRoute('Şanlıurfa', [[38.79, 37.17], [38.92, 37.22]])],
-  'catalhoyuk': [TurkeyRoute('Konya', [[32.86, 37.93], [32.60, 37.57], [32.83, 37.67]])],
-  'gordion': [TurkeyRoute('Ankara', [[32.86, 39.93], [32.39, 39.71]])],
-  'hattusa': [TurkeyRoute('Ankara', [[32.86, 39.93], [34.40, 40.16], [34.61, 40.02]])],
-  'sardis': [TurkeyRoute('İzmir', [[27.14, 38.42], [28.04, 38.49]])],
-  'troy': [TurkeyRoute('Çanakkale', [[26.41, 40.15], [26.24, 39.96]])],
-  'ephesus': [TurkeyRoute('İzmir', [[27.14, 38.42], [27.40, 38.30], [27.34, 37.94]])],
-  'side': [TurkeyRoute('Antalya', [[30.71, 36.90], [31.39, 37.06], [31.38, 36.77]])],
-  'aspendos': [TurkeyRoute('Antalya', [[30.71, 36.90], [31.17, 36.95]])],
-  'pergamon': [TurkeyRoute('İzmir', [[27.14, 38.42], [27.18, 39.13]])],
-  'miletus': [TurkeyRoute('Aydın', [[27.85, 37.85], [27.23, 37.53]])],
-  'aphrodisias': [TurkeyRoute('Denizli', [[29.09, 37.78], [28.72, 37.71]])],
-  'nemrut': [TurkeyRoute('Adıyaman', [[38.28, 37.76], [38.74, 37.98]])],
-  'pamukkale': [TurkeyRoute('Denizli', [[29.09, 37.78], [29.12, 37.92]])],
-  'myra': [TurkeyRoute('Antalya', [[30.71, 36.90], [29.99, 36.25]])],
-  'halicarnassus': [TurkeyRoute('Milas', [[27.78, 37.30], [27.42, 37.04]])],
+  'gobekli-tepe': [TurkeyRoute('Şanlıurfa', 15, [[38.79, 37.17], [38.86, 37.20], [38.92, 37.22]])],
+  'catalhoyuk': [TurkeyRoute('Konya', 50, [[32.86, 37.93], [32.60, 37.57], [32.83, 37.67]])],
+  'gordion': [TurkeyRoute('Ankara', 90, [[32.86, 39.93], [32.58, 39.58], [32.39, 39.71]])],
+  'hattusa': [TurkeyRoute('Ankara', 200, [[32.86, 39.93], [34.40, 40.16], [34.61, 40.02]])],
+  'sardis': [TurkeyRoute('İzmir', 75, [[27.14, 38.42], [27.70, 38.49], [28.04, 38.49]])],
+  'troy': [TurkeyRoute('Çanakkale', 30, [[26.41, 40.15], [26.30, 40.05], [26.24, 39.96]])],
+  'ephesus': [TurkeyRoute('İzmir', 60, [[27.14, 38.42], [27.40, 38.30], [27.34, 37.94]])],
+  'side': [TurkeyRoute('Antalya', 75, [[30.71, 36.90], [31.43, 36.87], [31.38, 36.77]])],
+  'aspendos': [TurkeyRoute('Antalya', 40, [[30.71, 36.90], [30.95, 36.91], [31.17, 36.95]])],
+  'pergamon': [TurkeyRoute('İzmir', 105, [[27.14, 38.42], [27.05, 38.63], [27.18, 39.13]])],
+  'miletus': [TurkeyRoute('Aydın', 75, [[27.85, 37.85], [27.50, 37.49], [27.23, 37.53]])],
+  'aphrodisias': [TurkeyRoute('Denizli', 100, [[29.09, 37.78], [28.95, 37.72], [28.72, 37.71]])],
+  'nemrut': [TurkeyRoute('Adıyaman', 85, [[38.28, 37.76], [37.78, 38.10], [38.74, 37.98]])],
+  'pamukkale': [TurkeyRoute('Denizli', 20, [[29.09, 37.78], [29.10, 37.85], [29.12, 37.92]])],
+  'myra': [TurkeyRoute('Antalya', 140, [[30.71, 36.90], [30.56, 36.60], [30.35, 36.45], [29.98, 36.38], [29.99, 36.26]])],
+  'halicarnassus': [TurkeyRoute('Milas', 50, [[27.78, 37.30], [27.60, 37.15], [27.42, 37.04]])],
   'cappadocia': [
-    TurkeyRoute('Kayseri', [[35.48, 38.73], [34.87, 38.62]]),
-    TurkeyRoute('Ankara', [[32.86, 39.93], [34.03, 38.37], [34.87, 38.62]]),
+    TurkeyRoute('Kayseri', 75, [[35.48, 38.73], [35.15, 38.70], [34.87, 38.62]]),
+    TurkeyRoute('Ankara', 280, [[32.86, 39.93], [34.03, 38.37], [34.50, 38.50], [34.87, 38.62]]),
   ],
-  'hagia-sophia': [TurkeyRoute('IST airport', [[28.74, 41.26], [28.98, 41.01]])],
-  'basilica-cistern': [TurkeyRoute('IST airport', [[28.74, 41.26], [28.98, 41.01]])],
-  'topkapi': [TurkeyRoute('IST airport', [[28.74, 41.26], [29.01, 41.01]])],
-  'dolmabahce': [TurkeyRoute('IST airport', [[28.74, 41.26], [29.00, 41.04]])],
-  'ani': [TurkeyRoute('Kars', [[43.09, 40.60], [43.57, 40.51]])],
-  'sumela': [TurkeyRoute('Trabzon', [[39.72, 41.01], [39.69, 40.76]])],
-  'selimiye': [TurkeyRoute('İstanbul', [[28.98, 41.01], [26.56, 41.68]])],
-  'ishak-pasha': [TurkeyRoute('Ağrı', [[43.05, 39.92], [44.13, 39.52]])],
-  'anitkabir': [TurkeyRoute('ESB airport', [[32.99, 40.12], [32.84, 39.93]])],
+  'hagia-sophia': [TurkeyRoute('IST airport', 45, [[28.74, 41.26], [28.87, 41.10], [28.98, 41.01]])],
+  'basilica-cistern': [TurkeyRoute('IST airport', 45, [[28.74, 41.26], [28.87, 41.10], [28.98, 41.01]])],
+  'topkapi': [TurkeyRoute('IST airport', 45, [[28.74, 41.26], [28.87, 41.10], [29.01, 41.01]])],
+  'dolmabahce': [TurkeyRoute('IST airport', 45, [[28.74, 41.26], [28.90, 41.15], [29.00, 41.04]])],
+  'ani': [TurkeyRoute('Kars', 45, [[43.09, 40.60], [43.35, 40.55], [43.57, 40.51]])],
+  'sumela': [TurkeyRoute('Trabzon', 45, [[39.72, 41.01], [39.62, 40.82], [39.69, 40.76]])],
+  'selimiye': [TurkeyRoute('İstanbul', 235, [[28.98, 41.01], [27.90, 41.30], [26.93, 41.43], [26.56, 41.68]])],
+  'ishak-pasha': [TurkeyRoute('Ağrı', 90, [[43.05, 39.92], [43.66, 39.60], [44.13, 39.52]])],
+  'anitkabir': [TurkeyRoute('ESB airport', 30, [[32.99, 40.12], [32.90, 40.00], [32.84, 39.93]])],
 };
 
 void drawDashedPath(Canvas canvas, Path path, Paint paint) {
@@ -165,8 +166,9 @@ void drawDashedPath(Canvas canvas, Path path, Paint paint) {
 class SiteRoutesPainter extends CustomPainter {
   final List<TurkeyRoute> routes;
   final Color color;
+  final bool faint;
 
-  SiteRoutesPainter(this.routes, {this.color = const Color(0xFF8A6D1C)});
+  SiteRoutesPainter(this.routes, {this.faint = false, this.color = const Color(0xFF8A6D1C)});
 
   TextPainter _label(String text) {
     return TextPainter(
@@ -186,12 +188,12 @@ class SiteRoutesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color
+      ..color = faint ? color.withValues(alpha: 110) : color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.2
+      ..strokeWidth = faint ? 1.8 : 3.2
       ..strokeCap = StrokeCap.round;
     final startRing = Paint()..color = Colors.white;
-    final startDot = Paint()..color = color;
+    final startDot = Paint()..color = faint ? color.withValues(alpha: 140) : color;
 
     for (final r in routes) {
       final pts = r.points
@@ -206,6 +208,7 @@ class SiteRoutesPainter extends CustomPainter {
         }
       }
       drawDashedPath(canvas, path, paint);
+      if (faint) continue;
 
       canvas.drawCircle(pts.first, 6.5, startRing);
       canvas.drawCircle(pts.first, 4.5, startDot);
@@ -226,7 +229,7 @@ class SiteRoutesPainter extends CustomPainter {
         canvas.drawPath(arrow, startDot);
       }
 
-      final tp = _label(r.from);
+      final tp = _label('${r.from} · ${r.km} km');
       final at = pts.first + Offset(-tp.width / 2, -tp.height - 10);
       canvas.drawRRect(
         RRect.fromRectAndRadius(at & Size(tp.width + 6, tp.height + 2), const Radius.circular(4)),
