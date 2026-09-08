@@ -121,12 +121,15 @@ class TurkeyRoute {
 }
 
 const Map<String, List<TurkeyRoute>> kSiteRoutes = {
-  'gobekli-tepe': [TurkeyRoute('Şanlıurfa', 15, [[38.79, 37.16], [38.86, 37.20], [38.92, 37.22]])],
+  'gobekli-tepe': [
+    TurkeyRoute('Şanlıurfa', 15, [[38.79, 37.16], [38.86, 37.20], [38.92, 37.22]]),
+    TurkeyRoute('Gaziantep', 150, [[37.38, 37.07], [38.00, 37.35], [38.79, 37.16], [38.86, 37.20], [38.92, 37.22]]),
+  ],
   'catalhoyuk': [TurkeyRoute('Konya', 50, [[32.49, 37.87], [32.60, 37.57], [32.83, 37.67]])],
   'gordion': [TurkeyRoute('Ankara', 90, [[32.86, 39.93], [32.58, 39.58], [32.39, 39.71]])],
   'hattusa': [TurkeyRoute('Ankara', 200, [[32.86, 39.93], [34.40, 40.16], [34.61, 40.02]])],
   'sardis': [TurkeyRoute('İzmir', 75, [[27.14, 38.42], [27.70, 38.49], [28.04, 38.49]])],
-  'troy': [TurkeyRoute('Çanakkale', 30, [[26.41, 40.15], [26.30, 40.05], [26.24, 39.96]])],
+  'troy': [TurkeyRoute('İstanbul', 350, [[28.97, 41.01], [27.90, 40.95], [26.90, 40.70], [26.67, 40.41], [26.41, 40.15], [26.24, 39.96]])],
   'ephesus': [TurkeyRoute('İzmir', 60, [[27.14, 38.42], [27.40, 38.30], [27.34, 37.94]])],
   'side': [TurkeyRoute('Antalya', 75, [[30.70, 36.90], [31.43, 36.87], [31.38, 36.77]])],
   'aspendos': [TurkeyRoute('Antalya', 40, [[30.70, 36.90], [30.95, 36.91], [31.17, 36.95]])],
@@ -134,7 +137,10 @@ const Map<String, List<TurkeyRoute>> kSiteRoutes = {
   'miletus': [TurkeyRoute('Aydın', 75, [[27.85, 37.85], [27.50, 37.49], [27.23, 37.53]])],
   'aphrodisias': [TurkeyRoute('Denizli', 100, [[29.09, 37.78], [28.95, 37.72], [28.72, 37.71]])],
   'nemrut': [TurkeyRoute('Adıyaman', 85, [[38.28, 37.76], [37.78, 38.10], [38.74, 37.98]])],
-  'pamukkale': [TurkeyRoute('Denizli', 20, [[29.09, 37.78], [29.10, 37.85], [29.12, 37.92]])],
+  'pamukkale': [
+    TurkeyRoute('Denizli', 20, [[29.09, 37.78], [29.10, 37.85], [29.12, 37.92]]),
+    TurkeyRoute('İzmir', 250, [[27.14, 38.42], [27.85, 37.85], [29.09, 37.78], [29.12, 37.92]]),
+  ],
   'myra': [TurkeyRoute('Antalya', 140, [[30.70, 36.90], [30.56, 36.60], [30.35, 36.45], [29.98, 36.38], [29.99, 36.26]])],
   'halicarnassus': [TurkeyRoute('Milas', 50, [[27.78, 37.30], [27.60, 37.15], [27.42, 37.04]])],
   'cappadocia': [
