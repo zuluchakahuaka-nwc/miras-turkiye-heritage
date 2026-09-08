@@ -141,17 +141,19 @@ Log 'nav: open card (tap 380,1150)'
 Start-Sleep -Seconds 3
 $null = Shot '04_detail_side'
 
-Log 'nav: back x2'
+Log 'nav: back x3 (keyboard eats one back)'
+& $adb shell input keyevent 4
+Start-Sleep -Seconds 1
 & $adb shell input keyevent 4
 Start-Sleep -Seconds 1
 & $adb shell input keyevent 4
 Start-Sleep -Seconds 2
 
-Log 'nav: language menu (tap 1325,160), pick English (tap 1286,736)'
+Log 'nav: language menu (tap 1325,160), pick English (tap 1210,1920)'
 & $adb shell input tap 1325 160
 Start-Sleep -Seconds 2
 $null = Shot '05_lang_menu'
-& $adb shell input tap 1286 736
+& $adb shell input tap 1210 1920
 Start-Sleep -Seconds 2
 $null = Shot '06_home_en'
 
