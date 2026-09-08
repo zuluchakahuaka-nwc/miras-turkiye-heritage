@@ -45,6 +45,7 @@ class Site {
   final int sortYear;
   final double lat;
   final double lon;
+  final String? entryFee;
   final L10nText desc;
   final L10nText pride;
   final L10nText legend;
@@ -63,6 +64,7 @@ class Site {
     required this.sortYear,
     required this.lat,
     required this.lon,
+    this.entryFee,
     required this.desc,
     required this.pride,
     required this.legend,
@@ -82,6 +84,7 @@ class TimelineEntry {
 const List<Site> kSites = [
   Site(
     id: 'gobekli-tepe',
+    entryFee: '≈25–30 €',
     name: L10nText('Гёбекли-Тепе', 'Göbekli Tepe', 'Göbekli Tepe'),
     region: L10nText('Шанлыурфа', 'Şanlıurfa', 'Şanlıurfa'),
     date: L10nText('ок. 9500 г. до н. э.', 'MÖ y. 9500', 'c. 9500 BC'),
@@ -116,6 +119,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'catalhoyuk',
+    entryFee: '≈3–5 €',
     name: L10nText('Чатал-Хююк', 'Çatalhöyük', 'Çatalhöyük'),
     region: L10nText('Конья', 'Konya', 'Konya'),
     date: L10nText('ок. 7100 г. до н. э.', 'MÖ y. 7100', 'c. 7100 BC'),
@@ -149,6 +153,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'gordion',
+    entryFee: '≈5 €',
     name: L10nText('Гордион', 'Gordion', 'Gordion'),
     region: L10nText('Анкара (Полатлы)', 'Ankara (Polatlı)', 'Ankara (Polatlı)'),
     date: L10nText('ок. 800 г. до н. э.', 'MÖ y. 800', 'c. 800 BC'),
@@ -182,6 +187,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'hattusa',
+    entryFee: '≈6 €',
     name: L10nText('Хаттуса', 'Hattuşa', 'Hattusa'),
     region: L10nText('Чорум', 'Çorum', 'Çorum'),
     date: L10nText('ок. 1650 г. до н. э.', 'MÖ y. 1650', 'c. 1650 BC'),
@@ -215,6 +221,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'sardis',
+    entryFee: '≈5 €',
     name: L10nText('Сарды', 'Sardes', 'Sardis'),
     region: L10nText('Маниса (Салихли)', 'Manisa (Salihli)', 'Manisa (Salihli)'),
     date: L10nText('ок. 600 г. до н. э.', 'MÖ y. 600', 'c. 600 BC'),
@@ -247,6 +254,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'troy',
+    entryFee: '≈10–15 €',
     name: L10nText('Троя', 'Truva', 'Troy'),
     region: L10nText('Чанаккале', 'Çanakkale', 'Çanakkale'),
     date: L10nText('ок. 3000 г. до н. э.', 'MÖ y. 3000', 'c. 3000 BC'),
@@ -281,6 +289,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'ephesus',
+    entryFee: '≈40 €',
     name: L10nText('Эфес', 'Efes', 'Ephesus'),
     region: L10nText('Измир', 'İzmir', 'İzmir'),
     date: L10nText('X в. до н. э.', 'MÖ 10. yüzyıl', '10th c. BC'),
@@ -315,6 +324,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'side',
+    entryFee: '≈8 €',
     name: L10nText('Сиде', 'Side', 'Side'),
     region: L10nText('Анталья', 'Antalya', 'Antalya'),
     date: L10nText('VII в. до н. э.', 'MÖ 7. yüzyıl', '7th c. BC'),
@@ -348,6 +358,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'aspendos',
+    entryFee: '≈8–10 €',
     name: L10nText('Аспендос', 'Aspendos', 'Aspendos'),
     region: L10nText('Анталья', 'Antalya', 'Antalya'),
     date: L10nText('155 г.', 'MS 155', 'AD 155'),
@@ -380,6 +391,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'pergamon',
+    entryFee: '≈13 €',
     name: L10nText('Пергам', 'Pergamon', 'Pergamon'),
     region: L10nText('Измир (Бергама)', 'İzmir (Bergama)', 'İzmir (Bergama)'),
     date: L10nText('III в. до н. э.', 'MÖ 3. yüzyıl', '3rd c. BC'),
@@ -413,6 +425,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'miletus',
+    entryFee: '≈6 €',
     name: L10nText('Милет', 'Milet', 'Miletus'),
     region: L10nText('Айдын (Дидим)', 'Aydın (Didim)', 'Aydın (Didim)'),
     date: L10nText('VI в. до н. э.', 'MÖ 6. yüzyıl', '6th c. BC'),
@@ -445,6 +458,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'aphrodisias',
+    entryFee: '≈10–12 €',
     name: L10nText('Афродисиас', 'Afrodisias', 'Aphrodisias'),
     region: L10nText('Айдын (Карасую)', 'Aydın (Karacasu)', 'Aydın (Karacasu)'),
     date: L10nText('II в. до н. э.', 'MÖ 2. yüzyıl', '2nd c. BC'),
@@ -478,6 +492,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'nemrut',
+    entryFee: '≈10 €',
     name: L10nText('Немрут-Даг', 'Nemrut Dağı', 'Mount Nemrut'),
     region: L10nText('Адыяман', 'Adıyaman', 'Adıyaman'),
     date: L10nText('62 г. до н. э.', 'MÖ 62', '62 BC'),
@@ -511,6 +526,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'pamukkale',
+    entryFee: '≈30–35 €',
     name: L10nText('Иераполь и Памуккале', 'Hierapolis ve Pamukkale', 'Hierapolis & Pamukkale'),
     region: L10nText('Денизли', 'Denizli', 'Denizli'),
     date: L10nText('II в. до н. э.', 'MÖ 2. yüzyıl', '2nd c. BC'),
@@ -544,6 +560,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'myra',
+    entryFee: '≈8 €',
     name: L10nText('Мира', 'Myra', 'Myra'),
     region: L10nText('Анталья (Демре)', 'Antalya (Demre)', 'Antalya (Demre)'),
     date: L10nText('V в. до н. э.', 'MÖ 5. yüzyıl', '5th c. BC'),
@@ -576,6 +593,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'halicarnassus',
+    entryFee: '≈5–8 €',
     name: L10nText('Галикарнас', 'Halikarnas', 'Halicarnassus'),
     region: L10nText('Бодрум', 'Bodrum', 'Bodrum'),
     date: L10nText('350 г. до н. э.', 'MÖ 350', '350 BC'),
@@ -608,6 +626,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'cappadocia',
+    entryFee: '≈20–25 €',
     name: L10nText('Каппадокия', 'Kapadokya', 'Cappadocia'),
     region: L10nText('Невшехир', 'Nevşehir', 'Nevşehir'),
     date: L10nText('IV в.', 'MS 4. yüzyıl', '4th c. AD'),
@@ -675,6 +694,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'basilica-cistern',
+    entryFee: '≈30 €',
     name: L10nText('Цистерна Базилика', 'Yerebatan Sarnıcı', 'Basilica Cistern'),
     region: L10nText('Истанбул', 'İstanbul', 'İstanbul'),
     date: L10nText('532 г.', 'MS 532', 'AD 532'),
@@ -707,6 +727,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'ani',
+    entryFee: '≈10 €',
     name: L10nText('Ани', 'Ani', 'Ani'),
     region: L10nText('Карс', 'Kars', 'Kars'),
     date: L10nText('X в.', 'MS 10. yüzyıl', '10th c. AD'),
@@ -740,6 +761,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'sumela',
+    entryFee: '≈10–13 €',
     name: L10nText('Монастырь Сумела', 'Sümela Manastırı', 'Sümela Monastery'),
     region: L10nText('Трабзон (Мачка)', 'Trabzon (Maçka)', 'Trabzon (Maçka)'),
     date: L10nText('386 г.', 'MS 386', 'AD 386'),
@@ -772,6 +794,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'topkapi',
+    entryFee: '≈50–65 €',
     name: L10nText('Дворец Топкапы', 'Topkapı Sarayı', 'Topkapı Palace'),
     region: L10nText('Истанбул', 'İstanbul', 'İstanbul'),
     date: L10nText('1478 г.', 'MS 1478', 'AD 1478'),
@@ -838,6 +861,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'ishak-pasha',
+    entryFee: '≈6 €',
     name: L10nText('Дворец Ишак-паши', 'İshak Paşa Sarayı', 'İshak Pasha Palace'),
     region: L10nText('Агры (Догубаязыт)', 'Ağrı (Doğubayazıt)', 'Ağrı (Doğubayazıt)'),
     date: L10nText('1784 г.', 'MS 1784', 'AD 1784'),
@@ -870,6 +894,7 @@ const List<Site> kSites = [
   ),
   Site(
     id: 'dolmabahce',
+    entryFee: '≈35 €',
     name: L10nText('Дворец Долмабахче', 'Dolmabahçe Sarayı', 'Dolmabahçe Palace'),
     region: L10nText('Истанбул', 'İstanbul', 'İstanbul'),
     date: L10nText('1856 г.', 'MS 1856', 'AD 1856'),

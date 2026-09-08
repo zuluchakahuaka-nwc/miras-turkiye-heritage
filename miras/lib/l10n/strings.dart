@@ -90,6 +90,21 @@ const Map<String, Map<AppLang, String>> kStrings = {
     AppLang.tr: 'Harita',
     AppLang.en: 'Map',
   },
+  'action.showOnMap': {
+    AppLang.ru: 'Показать на карте',
+    AppLang.tr: 'Haritada göster',
+    AppLang.en: 'Show on map',
+  },
+  'map.searchHint': {
+    AppLang.ru: 'Найти на карте: Сиде, Efes, Ani…',
+    AppLang.tr: 'Haritada ara: Side, Efes, Ani…',
+    AppLang.en: 'Find on the map: Side, Ephesus, Ani…',
+  },
+  'map.showNames': {
+    AppLang.ru: 'Названия',
+    AppLang.tr: 'Adlar',
+    AppLang.en: 'Names',
+  },
   'section.map': {
     AppLang.ru: 'Карта Турции',
     AppLang.tr: 'Türkiye haritası',

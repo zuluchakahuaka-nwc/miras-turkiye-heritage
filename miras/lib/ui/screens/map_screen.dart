@@ -25,8 +25,9 @@ const Map<String, Offset> kMarkerNudges = {
 
 class MapScreen extends StatefulWidget {
   final AppLang lang;
+  final String? focusSiteId;
 
-  const MapScreen({super.key, required this.lang});
+  const MapScreen({super.key, required this.lang, this.focusSiteId});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -34,23 +35,46 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final TransformationController _controller = TransformationController();
+  final TextEditingController _search = TextEditingController();
   bool _fitted = false;
+  bool _showAllNames = false;
   String? _selectedId;
+  String _query = '';
   static const double baseW = kMapBaseWidth;
   static const double baseH = kMapBaseHeight;
 
   @override
   void dispose() {
     _controller.dispose();
+    _search.dispose();
     super.dispose();
+  }
+
+  bool _matches(Site site) {
+    if (_query.trim().isEmpty) return true;
+    final q = _query.trim().toLowerCase();
+    return '${site.name.ru} ${site.name.tr} ${site.name.en} ${site.id}'
+        .toLowerCase()
+        .contains(q);
+  }
+
+  List<Site> get _visibleSites => kSites.where(_matches).toList();
+
+  void _onSearchChanged(String value) {
+    setState(() {
+      _query = value;
+      final visible = _visibleSites;
+      if (visible.length == 1) {
+        _selectedId = visible.first.id;
+      } else if (visible.isEmpty) {
+        _selectedId = null;
+      }
+    });
   }
 
   void _handleMarkerTap(Site site) {
     if (_selectedId == site.id) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => SiteDetailScreen(site: site, lang: widget.lang)),
-      );
+      _openDetail(site);
     } else {
       setState(() => _selectedId = site.id);
     }
@@ -61,6 +85,11 @@ class _MapScreenState extends State<MapScreen> {
       context,
       MaterialPageRoute(builder: (_) => SiteDetailScreen(site: site, lang: widget.lang)),
     );
+  }
+
+  Site? get _selectedSite {
+    if (_selectedId == null) return null;
+    return kSites.firstWhere((s) => s.id == _selectedId);
   }
 
   @override
@@ -81,9 +110,13 @@ class _MapScreenState extends State<MapScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: t(lang, 'action.sources'),
-            onPressed: () {},
-            icon: const Icon(Icons.info_outline),
+            key: const Key('map.names.toggle'),
+            tooltip: t(lang, 'map.showNames'),
+            onPressed: () => setState(() => _showAllNames = !_showAllNames),
+            icon: Icon(
+              _showAllNames ? Icons.label : Icons.label_outline,
+              color: _showAllNames ? MirasColors.goldLight : null,
+            ),
           ),
         ],
       ),
@@ -104,6 +137,28 @@ class _MapScreenState extends State<MapScreen> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 2),
+            child: TextField(
+              key: const Key('map.search'),
+              controller: _search,
+              onChanged: _onSearchChanged,
+              decoration: InputDecoration(
+                hintText: t(lang, 'map.searchHint'),
+                prefixIcon: const Icon(Icons.search),
+                isDense: true,
+                suffixIcon: _query.isEmpty
+                    ? null
+                    : IconButton(
+                        icon: const Icon(Icons.close, size: 18),
+                        onPressed: () {
+                          _search.clear();
+                          _onSearchChanged('');
+                        },
+                      ),
+              ),
+            ),
+          ),
           SizedBox(
             height: 54,
             child: ListView(
@@ -119,11 +174,26 @@ class _MapScreenState extends State<MapScreen> {
               builder: (context, constraints) {
                 if (!_fitted) {
                   final s = constraints.biggest;
-                  final scale = s.width / baseW;
-                  final tx = (s.width - baseW * scale) / 2;
-                  final ty = (s.height - baseH * scale) / 2;
-                  _controller.value = Matrix4.translationValues(tx, ty, 0)
-                      .multiplied(Matrix4.diagonal3Values(scale, scale, 1));
+                  final focus = _selectedSite ??
+                      (widget.focusSiteId == null
+                          ? null
+                          : kSites.firstWhere((x) => x.id == widget.focusSiteId));
+                  if (focus != null) {
+                    _selectedId = focus.id;
+                    final pos = TurkeyGeometry.project(focus.lat, focus.lon) +
+                        (kMarkerNudges[focus.id] ?? Offset.zero);
+                    const scale = 3.2;
+                    final tx = s.width / 2 - pos.dx * scale;
+                    final ty = s.height / 2 - pos.dy * scale;
+                    _controller.value = Matrix4.translationValues(tx, ty, 0)
+                        .multiplied(Matrix4.diagonal3Values(scale, scale, 1));
+                  } else {
+                    final scale = s.width / baseW;
+                    final tx = (s.width - baseW * scale) / 2;
+                    final ty = (s.height - baseH * scale) / 2;
+                    _controller.value = Matrix4.translationValues(tx, ty, 0)
+                        .multiplied(Matrix4.diagonal3Values(scale, scale, 1));
+                  }
                   _fitted = true;
                 }
                 return GestureDetector(
@@ -149,15 +219,17 @@ class _MapScreenState extends State<MapScreen> {
                               site: site,
                               lang: widget.lang,
                               selected: _selectedId == site.id,
+                              dimmed: !_matches(site),
                               onTap: () => _handleMarkerTap(site),
                             ),
-                          if (_selectedId != null)
+                          if (_showAllNames)
+                            for (final site in _visibleSites)
+                              _NameChip(site: site, lang: widget.lang),
+                          if (_selectedSite != null)
                             _SelectedLabel(
-                              site: kSites.firstWhere((s) => s.id == _selectedId),
+                              site: _selectedSite!,
                               lang: widget.lang,
-                              onTap: () => _openDetail(
-                                kSites.firstWhere((s) => s.id == _selectedId),
-                              ),
+                              onTap: () => _openDetail(_selectedSite!),
                             ),
                         ],
                       ),
@@ -216,6 +288,50 @@ class _LegendChip extends StatelessWidget {
   }
 }
 
+class _NameChip extends StatelessWidget {
+  final Site site;
+  final AppLang lang;
+
+  const _NameChip({required this.site, required this.lang});
+
+  @override
+  Widget build(BuildContext context) {
+    final pos = TurkeyGeometry.project(site.lat, site.lon) +
+        (kMarkerNudges[site.id] ?? Offset.zero);
+    final color = kEraMarkerColors[site.era]!;
+    return Positioned(
+      left: pos.dx - 60,
+      top: pos.dy + 21,
+      width: 120,
+      child: Center(
+        child: IgnorePointer(
+          child: Container(
+            key: Key('map.name.${site.id}'),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+            decoration: BoxDecoration(
+              color: const Color(0xE6FFFFFF),
+              borderRadius: BorderRadius.circular(7),
+              border: Border.all(color: color, width: 1.2),
+            ),
+            child: Text(
+              site.name.by(lang),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontFamily: 'Manrope',
+                fontWeight: FontWeight.w700,
+                fontSize: 10,
+                color: MirasColors.ink,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _SelectedLabel extends StatelessWidget {
   final Site site;
   final AppLang lang;
@@ -251,7 +367,9 @@ class _SelectedLabel extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    site.name.by(lang),
+                    site.entryFee == null
+                        ? site.name.by(lang)
+                        : '${site.name.by(lang)} · ${site.entryFee}',
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontFamily: 'Manrope',
@@ -276,12 +394,14 @@ class _MapMarker extends StatelessWidget {
   final Site site;
   final AppLang lang;
   final bool selected;
+  final bool dimmed;
   final VoidCallback onTap;
 
   const _MapMarker({
     required this.site,
     required this.lang,
     required this.selected,
+    required this.dimmed,
     required this.onTap,
   });
 
@@ -290,31 +410,34 @@ class _MapMarker extends StatelessWidget {
     final pos = TurkeyGeometry.project(site.lat, site.lon) +
         (kMarkerNudges[site.id] ?? Offset.zero);
     final color = kEraMarkerColors[site.era]!;
-    final size = selected ? 38.0 : 30.0;
+    final size = selected ? 42.0 : 34.0;
     return Positioned(
       left: pos.dx - size / 2,
       top: pos.dy - size / 2,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          key: Key('map.marker.${site.id}'),
-          customBorder: const CircleBorder(),
-          onTap: onTap,
-          child: Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: selected ? 3 : 2),
-              boxShadow: const [
-                BoxShadow(color: Color(0x40000000), blurRadius: 4, offset: Offset(0, 2)),
-              ],
-            ),
-            child: Icon(
-              site.featured ? Icons.star : Icons.place,
-              size: selected ? 19 : 15,
-              color: site.featured ? MirasColors.goldLight : Colors.white,
+      child: Opacity(
+        opacity: dimmed ? 0.15 : 1.0,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            key: Key('map.marker.${site.id}'),
+            customBorder: const CircleBorder(),
+            onTap: onTap,
+            child: Container(
+              width: size,
+              height: size,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: selected ? 3 : 2),
+                boxShadow: const [
+                  BoxShadow(color: Color(0x40000000), blurRadius: 4, offset: Offset(0, 2)),
+                ],
+              ),
+              child: Icon(
+                site.featured ? Icons.star : Icons.place,
+                size: selected ? 20 : 17,
+                color: site.featured ? MirasColors.goldLight : Colors.white,
+              ),
             ),
           ),
         ),

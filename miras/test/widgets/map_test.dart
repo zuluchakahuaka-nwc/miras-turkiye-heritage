@@ -119,7 +119,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('map.label.ephesus')), findsOneWidget);
-      expect(find.text('Эфес'), findsOneWidget);
+      expect(find.textContaining('Эфес'), findsOneWidget);
       expect(find.byType(SiteDetailScreen), findsNothing);
 
       await tester.tap(find.byKey(const Key('map.marker.ephesus')));
@@ -129,16 +129,44 @@ void main() {
       expect(find.text('Легенды и мифы'), findsOneWidget);
     });
 
-    testWidgets('label itself opens detail and tap on map deselects', (tester) async {
+    testWidgets('names toggle reveals every label at once', (tester) async {
       await pumpMap(tester, AppLang.ru);
 
-      await tester.tap(find.byKey(const Key('map.marker.ephesus')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const Key('map.label.ephesus')), findsOneWidget);
+      expect(find.byKey(const Key('map.name.troy')), findsNothing);
+      expect(find.byKey(const Key('map.name.side')), findsNothing);
 
-      await tester.tap(find.text('Эфес'));
+      await tester.tap(find.byKey(const Key('map.names.toggle')));
       await tester.pumpAndSettle();
-      expect(find.byType(SiteDetailScreen), findsOneWidget);
+
+      expect(find.byKey(const Key('map.name.troy')), findsOneWidget);
+      expect(find.byKey(const Key('map.name.side')), findsOneWidget);
+      expect(find.byKey(const Key('map.name.anitkabir')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('map.names.toggle')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('map.name.troy')), findsNothing);
+    });
+
+    testWidgets('search narrows markers and auto-reveals single match', (tester) async {
+      await pumpMap(tester, AppLang.ru);
+
+      await tester.enterText(find.byKey(const Key('map.search')), 'Side');
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('map.label.side')), findsOneWidget);
+    });
+
+    testWidgets('focusSiteId centers map with plaque visible', (tester) async {
+      tester.view.physicalSize = const Size(800, 1200);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(MaterialApp(
+        theme: buildMirasTheme(),
+        home: const MapScreen(lang: AppLang.tr, focusSiteId: 'side'),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('map.label.side')), findsOneWidget);
     });
   });
 }

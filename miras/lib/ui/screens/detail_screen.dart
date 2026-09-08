@@ -6,6 +6,7 @@ import '../../core/theme.dart';
 import '../../data/sites.dart';
 import '../../l10n/strings.dart';
 import '../widgets/ornaments.dart';
+import 'map_screen.dart';
 import 'sources_screen.dart';
 
 Future<String?> defaultPickMp3() async {
@@ -273,6 +274,21 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
                   Icons.my_location,
                   t(lang, 'detail.coords'),
                   formatCoords(site.lat, site.lon),
+                ),
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: OutlinedButton.icon(
+                    key: const Key('detail.showOnMap'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MapScreen(lang: lang, focusSiteId: site.id),
+                      ),
+                    ),
+                    icon: const Icon(Icons.map_outlined, size: 18),
+                    label: Text(t(lang, 'action.showOnMap')),
+                  ),
                 ),
                 const SizedBox(height: 14),
                 _MusicSection(
