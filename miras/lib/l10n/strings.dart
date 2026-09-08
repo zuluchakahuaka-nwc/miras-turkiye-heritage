@@ -205,6 +205,11 @@ const Map<String, Map<AppLang, String>> kStrings = {
     AppLang.tr: 'Nasıl gidilir',
     AppLang.en: 'Getting there',
   },
+  'prices.disclaimer': {
+    AppLang.ru: 'Цены ориентировочные — уточняйте перед поездкой.',
+    AppLang.tr: 'Fiyatlar yaklaşık — yolculuk öncesi kontrol edin.',
+    AppLang.en: 'Prices are approximate — check before you go.',
+  },
   'detail.coords': {
     AppLang.ru: 'Координаты',
     AppLang.tr: 'Koordinatlar',

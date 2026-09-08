@@ -91,6 +91,7 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
     required IconData icon,
     required String title,
     required String body,
+    String? footer,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -128,6 +129,18 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
                     color: MirasColors.bodyText,
                   ),
                 ),
+                if (footer != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    footer,
+                    style: const TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 11.5,
+                      fontStyle: FontStyle.italic,
+                      color: Color(0xFF7A7A6C),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
@@ -253,6 +266,7 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
                   icon: Icons.directions_bus,
                   title: t(lang, 'detail.gettingThere'),
                   body: site.gettingThere.by(lang),
+                  footer: t(lang, 'prices.disclaimer'),
                 ),
                 const SizedBox(height: 14),
                 _fact(
