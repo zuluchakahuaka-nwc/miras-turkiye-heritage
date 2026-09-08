@@ -4,7 +4,7 @@ import 'package:miras/core/theme.dart';
 import 'package:miras/data/manifest.dart';
 import 'package:miras/data/sites.dart';
 import 'package:miras/l10n/strings.dart';
-import 'package:miras/ui/map/turkey_map.dart' show TurkeyGeometry, kMapBaseWidth, kMapBaseHeight, kTurkeyCities, kTurkeyRoads;
+import 'package:miras/ui/map/turkey_map.dart' show TurkeyGeometry, kMapBaseWidth, kMapBaseHeight, kTurkeyCities, kTurkeyRoads, kSiteRoutes;
 import 'package:miras/ui/screens/detail_screen.dart';
 import 'package:miras/ui/screens/map_screen.dart' show MapScreen, kMarkerNudges;
 
@@ -57,6 +57,27 @@ void main() {
         final p = TurkeyGeometry.project(site.lat, site.lon) + e.value;
         expect(p.dx, inInclusiveRange(0, kMapBaseWidth), reason: e.key);
         expect(p.dy, inInclusiveRange(0, kMapBaseHeight), reason: e.key);
+      }
+    });
+
+    test('every site has a route from a nearest base city', () {
+      for (final s in kSites) {
+        final routes = kSiteRoutes[s.id];
+        expect(routes, isNotNull, reason: '${s.id} has no route');
+        expect(routes!.isNotEmpty, isTrue, reason: '${s.id} empty routes');
+        for (final r in routes) {
+          expect(r.from, isNotEmpty);
+          expect(r.points.length, greaterThanOrEqualTo(2), reason: '${s.id}/${r.from}');
+          for (final pt in r.points) {
+            final p = TurkeyGeometry.project(pt[1], pt[0]);
+            expect(p.dx, inInclusiveRange(0, kMapBaseWidth), reason: '${s.id}/${r.from}');
+            expect(p.dy, inInclusiveRange(0, kMapBaseHeight), reason: '${s.id}/${r.from}');
+          }
+          final end = TurkeyGeometry.project(
+              r.points.last[1], r.points.last[0]);
+          final marker = TurkeyGeometry.project(s.lat, s.lon);
+          expect((end - marker).distance, lessThan(3), reason: '${s.id} route must end at marker');
+        }
       }
     });
 
@@ -145,6 +166,18 @@ void main() {
       await tester.tap(find.byKey(const Key('map.names.toggle')));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('map.name.troy')), findsNothing);
+    });
+
+    testWidgets('selecting a site draws its route layer', (tester) async {
+      await pumpMap(tester, AppLang.ru);
+
+      expect(find.byKey(const Key('map.route.cappadocia')), findsNothing);
+
+      await tester.tap(find.byKey(const Key('map.marker.cappadocia')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('map.route.cappadocia')), findsOneWidget);
+      expect(find.byKey(const Key('map.label.cappadocia')), findsOneWidget);
     });
 
     testWidgets('search narrows markers and auto-reveals single match', (tester) async {

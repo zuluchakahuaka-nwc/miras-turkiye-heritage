@@ -104,6 +104,143 @@ const List<TurkeyRoad> kTurkeyRoads = [
   ], [35.10, 40.95]),
 ];
 
+class TurkeyRoute {
+  final String from;
+  final List<List<double>> points;
+
+  const TurkeyRoute(this.from, this.points);
+}
+
+const Map<String, List<TurkeyRoute>> kSiteRoutes = {
+  'gobekli-tepe': [TurkeyRoute('Şanlıurfa', [[38.79, 37.17], [38.92, 37.22]])],
+  'catalhoyuk': [TurkeyRoute('Konya', [[32.86, 37.93], [32.60, 37.57], [32.83, 37.67]])],
+  'gordion': [TurkeyRoute('Ankara', [[32.86, 39.93], [32.39, 39.71]])],
+  'hattusa': [TurkeyRoute('Ankara', [[32.86, 39.93], [34.40, 40.16], [34.61, 40.02]])],
+  'sardis': [TurkeyRoute('İzmir', [[27.14, 38.42], [28.04, 38.49]])],
+  'troy': [TurkeyRoute('Çanakkale', [[26.41, 40.15], [26.24, 39.96]])],
+  'ephesus': [TurkeyRoute('İzmir', [[27.14, 38.42], [27.40, 38.30], [27.34, 37.94]])],
+  'side': [TurkeyRoute('Antalya', [[30.71, 36.90], [31.39, 37.06], [31.38, 36.77]])],
+  'aspendos': [TurkeyRoute('Antalya', [[30.71, 36.90], [31.17, 36.95]])],
+  'pergamon': [TurkeyRoute('İzmir', [[27.14, 38.42], [27.18, 39.13]])],
+  'miletus': [TurkeyRoute('Aydın', [[27.85, 37.85], [27.23, 37.53]])],
+  'aphrodisias': [TurkeyRoute('Denizli', [[29.09, 37.78], [28.72, 37.71]])],
+  'nemrut': [TurkeyRoute('Adıyaman', [[38.28, 37.76], [38.74, 37.98]])],
+  'pamukkale': [TurkeyRoute('Denizli', [[29.09, 37.78], [29.12, 37.92]])],
+  'myra': [TurkeyRoute('Antalya', [[30.71, 36.90], [29.99, 36.25]])],
+  'halicarnassus': [TurkeyRoute('Milas', [[27.78, 37.30], [27.42, 37.04]])],
+  'cappadocia': [
+    TurkeyRoute('Kayseri', [[35.48, 38.73], [34.87, 38.62]]),
+    TurkeyRoute('Ankara', [[32.86, 39.93], [34.03, 38.37], [34.87, 38.62]]),
+  ],
+  'hagia-sophia': [TurkeyRoute('IST airport', [[28.74, 41.26], [28.98, 41.01]])],
+  'basilica-cistern': [TurkeyRoute('IST airport', [[28.74, 41.26], [28.98, 41.01]])],
+  'topkapi': [TurkeyRoute('IST airport', [[28.74, 41.26], [29.01, 41.01]])],
+  'dolmabahce': [TurkeyRoute('IST airport', [[28.74, 41.26], [29.00, 41.04]])],
+  'ani': [TurkeyRoute('Kars', [[43.09, 40.60], [43.57, 40.51]])],
+  'sumela': [TurkeyRoute('Trabzon', [[39.72, 41.01], [39.69, 40.76]])],
+  'selimiye': [TurkeyRoute('İstanbul', [[28.98, 41.01], [26.56, 41.68]])],
+  'ishak-pasha': [TurkeyRoute('Ağrı', [[43.05, 39.92], [44.13, 39.52]])],
+  'anitkabir': [TurkeyRoute('ESB airport', [[32.99, 40.12], [32.84, 39.93]])],
+};
+
+void drawDashedPath(Canvas canvas, Path path, Paint paint) {
+  const dash = 8.0;
+  const gap = 6.0;
+  for (final metric in path.computeMetrics()) {
+    var dist = 0.0;
+    var draw = true;
+    while (dist < metric.length) {
+      final len = draw ? dash : gap;
+      var next = dist + len;
+      if (next > metric.length) next = metric.length;
+      if (draw) {
+        canvas.drawPath(metric.extractPath(dist, next), paint);
+      }
+      dist = next;
+      draw = !draw;
+    }
+  }
+}
+
+class SiteRoutesPainter extends CustomPainter {
+  final List<TurkeyRoute> routes;
+  final Color color;
+
+  SiteRoutesPainter(this.routes, {this.color = const Color(0xFF8A6D1C)});
+
+  TextPainter _label(String text) {
+    return TextPainter(
+      text: TextSpan(
+        text: text,
+        style: const TextStyle(
+          fontFamily: 'Manrope',
+          fontWeight: FontWeight.w800,
+          fontSize: 11.5,
+          color: Color(0xFF5C4A12),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.2
+      ..strokeCap = StrokeCap.round;
+    final startRing = Paint()..color = Colors.white;
+    final startDot = Paint()..color = color;
+
+    for (final r in routes) {
+      final pts = r.points
+          .map((p) => TurkeyGeometry.project(p[1], p[0]))
+          .toList();
+      final path = Path();
+      for (var i = 0; i < pts.length; i++) {
+        if (i == 0) {
+          path.moveTo(pts.first.dx, pts.first.dy);
+        } else {
+          path.lineTo(pts[i].dx, pts[i].dy);
+        }
+      }
+      drawDashedPath(canvas, path, paint);
+
+      canvas.drawCircle(pts.first, 6.5, startRing);
+      canvas.drawCircle(pts.first, 4.5, startDot);
+
+      final last = pts.last;
+      final prev = pts[pts.length - 2];
+      final dir = (last - prev);
+      final len = dir.distance;
+      if (len > 0) {
+        final unit = dir / len;
+        final perp = Offset(-unit.dy, unit.dx);
+        final tip = last - unit * 14;
+        final arrow = Path()
+          ..moveTo(last.dx, last.dy)
+          ..lineTo(tip.dx + perp.dx * 6, tip.dy + perp.dy * 6)
+          ..lineTo(tip.dx - perp.dx * 6, tip.dy - perp.dy * 6)
+          ..close();
+        canvas.drawPath(arrow, startDot);
+      }
+
+      final tp = _label(r.from);
+      final at = pts.first + Offset(-tp.width / 2, -tp.height - 10);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(at & Size(tp.width + 6, tp.height + 2), const Radius.circular(4)),
+        Paint()..color = const Color(0xD9FFFFFF),
+      );
+      tp.paint(canvas, at + const Offset(3, 1));
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant SiteRoutesPainter oldDelegate) =>
+      oldDelegate.routes != routes;
+}
+
 class TurkeyMapPainter extends CustomPainter {
   final Color land;
   final Color border;
@@ -118,25 +255,6 @@ class TurkeyMapPainter extends CustomPainter {
     this.road = const Color(0xFF8D7B5A),
     this.city = const Color(0xFF0E2A2B),
   });
-
-  void _drawDashed(Canvas canvas, Path path, Paint paint) {
-    const dash = 8.0;
-    const gap = 6.0;
-    for (final metric in path.computeMetrics()) {
-      var dist = 0.0;
-      var draw = true;
-      while (dist < metric.length) {
-        final len = draw ? dash : gap;
-        var next = dist + len;
-        if (next > metric.length) next = metric.length;
-        if (draw) {
-          canvas.drawPath(metric.extractPath(dist, next), paint);
-        }
-        dist = next;
-        draw = !draw;
-      }
-    }
-  }
 
   TextPainter _label(String text, double size, Color color) {
     final tp = TextPainter(
@@ -192,7 +310,7 @@ class TurkeyMapPainter extends CustomPainter {
           rp.lineTo(p.dx, p.dy);
         }
       }
-      _drawDashed(canvas, rp, roadPaint);
+      drawDashedPath(canvas, rp, roadPaint);
       final lp = TurkeyGeometry.project(r.labelAt[1], r.labelAt[0]);
       final tp = _label(r.name, 12, const Color(0xFF6B5D3F));
       _pill(canvas, lp + Offset(-2, -tp.height / 2 - 1), Size(tp.width + 6, tp.height + 2), const Color(0xCCFFFFFF));

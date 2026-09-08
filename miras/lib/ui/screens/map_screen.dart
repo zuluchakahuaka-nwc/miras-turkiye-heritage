@@ -214,6 +214,16 @@ class _MapScreenState extends State<MapScreen> {
                           Positioned.fill(
                             child: CustomPaint(painter: TurkeyMapPainter()),
                           ),
+                          if (_selectedSite != null &&
+                              (kSiteRoutes[_selectedSite!.id]?.isNotEmpty ??
+                                  false))
+                            Positioned.fill(
+                              child: CustomPaint(
+                                key: Key('map.route.${_selectedSite!.id}'),
+                                painter:
+                                    SiteRoutesPainter(kSiteRoutes[_selectedSite!.id]!),
+                              ),
+                            ),
                           for (final site in kSites)
                             _MapMarker(
                               site: site,
